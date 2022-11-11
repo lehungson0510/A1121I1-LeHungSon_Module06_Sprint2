@@ -1,0 +1,17 @@
+
+
+.cart-shiping-update-wrapper a, button {
+  font-family: normal !important;
+  font-weight: bolder !important;
+}
+
+.breadcrumb-item, .breadcrumb-item a{
+  font-family: normal !important;
+  font-weight: bolder;
+  font-size:20px;
+}
+
+.product-details-content span{
+  font-weight: bolder;
+}
+

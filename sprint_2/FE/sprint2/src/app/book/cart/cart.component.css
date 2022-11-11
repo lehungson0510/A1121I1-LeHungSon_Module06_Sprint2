@@ -1,0 +1,26 @@
+.table-content th{
+  font-family: normal !important;
+  font-weight: bolder;
+  font-size: 17px;
+}
+
+.cart-shiping-update-wrapper a, button {
+  font-family: normal !important;
+  font-weight: bolder !important;
+}
+
+.grand-totall-title, .title-wrap h4{
+  font-family: normal !important;
+  font-weight: bolder;
+  font-size:22px;
+}
+
+.header-main {
+  background-color: #fff8f4 !important;
+}
+
+.breadcrumb-item, .breadcrumb-item a{
+  font-family: normal !important;
+  font-weight: bolder;
+  font-size:20px;
+}
