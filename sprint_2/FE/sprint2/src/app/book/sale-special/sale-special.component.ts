@@ -1,16 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {IBook} from '../../model/book/IBook';
-import {BookService} from '../../service/book/book.service';
-import {Router} from '@angular/router';
-import {CategoryService} from '../../service/book/category.service';
 import {ICategory} from '../../model/book/ICategory';
+import {BookService} from '../../service/book/book.service';
+import {CategoryService} from '../../service/book/category.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-sale-special',
+  templateUrl: './sale-special.component.html',
+  styleUrls: ['./sale-special.component.css']
 })
-export class HomeComponent implements OnInit {
+export class SaleSpecialComponent implements OnInit {
+
+  idCategory: number;
+
   bookSlide: IBook[] = [{
     bookCategoryId: {},
     bookPromotionId: {},
@@ -39,7 +42,7 @@ export class HomeComponent implements OnInit {
 
   category: ICategory;
 
-  title = 'Tất cả sách';
+  title = 'Các sách được giảm giá';
 
   nameSearch = '';
 
@@ -52,16 +55,14 @@ export class HomeComponent implements OnInit {
   constructor(private bookService: BookService,
               private categoryService: CategoryService,
               private router: Router,
-  ) {
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.top();
-    this.getBookSlide();
-    // this.getBookList(this.page - 1);
-    this.searchBookByName(this.nameSearch, 1);
-    this.getAllCategory();
-    this.getBestSale();
+      this.getBookSaleSpecial(1);
+      this.getAllCategory();
+      this.getBestSale();
+      this.getBookSlide();
   }
 
   top() {
@@ -106,17 +107,16 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  getBookByCategory(category: ICategory, page: number) {
-    this.title = category.categoryName;
-    this.category = category;
+  getBookByCategory(page: number) {
     this.page = page;
-    this.bookService.getBookByCategory(category.categoryId, this.page - 1).subscribe(
+    this.bookService.getBookByCategory(this.idCategory, this.page - 1).subscribe(
       (data: any) => {
         this.bookList = data.content;
         this.size = data.size;
         this.totalItems = data.totalElements;
       },
-      () => {},
+      () => {
+      },
       () => {
         this.topCategory();
       }
@@ -144,4 +144,19 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  getBookSaleSpecial(page: number) {
+    this.page = page;
+    this.bookService.getBookSaleSpecial(this.page - 1).subscribe(
+      (data: any) => {
+        this.bookList = data.content;
+        this.size = data.size;
+        this.totalItems = data.totalElements;
+      },
+      () => {
+      },
+      () => {
+        this.topCategory();
+      }
+    );
+  }
 }

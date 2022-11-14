@@ -1,1 +1,38 @@
+.load__more .btn:hover{
+  background-color: black;
+  color: whitesmoke;
+}
 
+.load__more .btn{
+  background-color:#eaaa85;
+  color: whitesmoke;
+}
+
+.quickview-content span{
+  font-weight: bolder;
+}
+
+.main-menu ul li.dropdown ul.sub-menu {
+  z-index: 10;
+}
+
+.deal-wrapper .title,  .modal-2 h2{
+  font-weight: 600;
+}
+
+.deal-image .discount{
+  bottom: 10px;
+}
+
+.deal-image img, .single-banner img, .single-banner{
+  cursor: pointer;
+}
+
+
+
+.banner-content .category, .title{
+  font-family: "Segoe UI";
+}
+/*.add-to-cart:hover{*/
+/*  background-color: #fff8f4;*/
+/*}*/

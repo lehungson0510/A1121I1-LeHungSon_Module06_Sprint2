@@ -1,16 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {IBook} from '../../model/book/IBook';
 import {BookService} from '../../service/book/book.service';
-import {Router} from '@angular/router';
 import {CategoryService} from '../../service/book/category.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {IBook} from '../../model/book/IBook';
 import {ICategory} from '../../model/book/ICategory';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-list-category',
+  templateUrl: './list-category.component.html',
+  styleUrls: ['./list-category.component.css']
 })
-export class HomeComponent implements OnInit {
+export class ListCategoryComponent implements OnInit {
+  idCategory: number;
+
   bookSlide: IBook[] = [{
     bookCategoryId: {},
     bookPromotionId: {},
@@ -52,16 +54,19 @@ export class HomeComponent implements OnInit {
   constructor(private bookService: BookService,
               private categoryService: CategoryService,
               private router: Router,
-  ) {
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.top();
-    this.getBookSlide();
-    // this.getBookList(this.page - 1);
-    this.searchBookByName(this.nameSearch, 1);
-    this.getAllCategory();
-    this.getBestSale();
+    this.activatedRoute.paramMap.subscribe((param) => {
+      this.idCategory = +param.get('id');
+      this.title = param.get('name');
+      this.getBookSlide();
+      // this.getBookList(this.page - 1);
+      this.getBookByCategory(1);
+      this.getAllCategory();
+      this.getBestSale();
+    });
   }
 
   top() {
@@ -106,11 +111,9 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  getBookByCategory(category: ICategory, page: number) {
-    this.title = category.categoryName;
-    this.category = category;
+  getBookByCategory(page: number) {
     this.page = page;
-    this.bookService.getBookByCategory(category.categoryId, this.page - 1).subscribe(
+    this.bookService.getBookByCategory(this.idCategory, this.page - 1).subscribe(
       (data: any) => {
         this.bookList = data.content;
         this.size = data.size;

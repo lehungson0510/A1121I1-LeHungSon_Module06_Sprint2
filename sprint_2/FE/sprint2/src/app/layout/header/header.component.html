@@ -3,9 +3,9 @@
     <!--  #E5DFDB-->
     <div class="container ">
       <div class="row d-flex justify-content-center">
-        <div class="col-md-2 " style="font-size: 13px; cursor: pointer">GIỚI THIỆU</div>
-        <div class="col-md-2 " style="font-size: 13px; cursor: pointer">LỊCH SỬ GIAO DỊCH</div>
-        <div class="col-md-2" style="font-size: 13px; cursor: pointer">KIỂM TRA ĐƠN HÀNG</div>
+        <div class="col-md-2 " style="font-size: 13px; cursor: pointer; font-weight: 600">GIỚI THIỆU</div>
+        <div class="col-md-2 " style="font-size: 13px; cursor: pointer; font-weight: 600">LỊCH SỬ GIAO DỊCH</div>
+        <div class="col-md-2" style="font-size: 13px; cursor: pointer; font-weight: 600">KIỂM TRA ĐƠN HÀNG</div>
       </div>
     </div>
   </div>
@@ -16,82 +16,84 @@
         <div class="col-auto align-self-center">
 
           <div class="header-logo">
-            <a href="/"><img src="assets/images/logo/logo.png" alt="Site Logo"/></a>
+            <a routerLink="/"><img src="assets/images/logo/logo.png" alt="Site Logo"/></a>
           </div>
         </div>
         <div class="col align-self-center d-none d-lg-block">
           <div class="main-menu">
             <ul>
-              <li class="dropdown"><a href="#">DANH MỤC SÁCH
+              <li class="dropdown"><a style="cursor: pointer">DANH MỤC SÁCH
                 <!--                <i class="fa fa-angle-down"></i>-->
               </a>
                 <ul class="sub-menu">
-                  <li><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
+                  <li *ngFor="let category of categoryList"><a
+                    [routerLink]="['/list-category',category.categoryId,category.categoryName]">{{category.categoryName}}</a>
+                  </li>
+                  <!--                  <li><a href="#">2</a></li>-->
                 </ul>
               </li>
               <li><a href="#">Sách bán chạy</a></li>
-              <li class="dropdown position-static"><a href="#">CHƯƠNG TRÌNH KHUYẾN MÃI</a>
-                <ul class="mega-menu d-block">
-                  <li class="d-flex">
-                    <ul class="d-block">
+<!--              <li class="dropdown position-static"><a href="#">CHƯƠNG TRÌNH KHUYẾN MÃI</a>-->
+<!--                <ul class="mega-menu d-block">-->
+<!--                  <li class="d-flex">-->
+<!--                    <ul class="d-block">-->
 
-                      <li class="title"><a href="#">Shop Page</a></li>
-                      <li><a href="shop-3-column.html">Shop 3 Column</a></li>
-                      <li><a href="shop-4-column.html">Shop 4 Column</a></li>
-                      <li><a href="shop-left-sidebar.html">Shop Left Sidebar</a></li>
-                      <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>
-                      <li><a href="shop-list-left-sidebar.html">Shop List Left Sidebar</a>
-                      </li>
-                      <li><a href="shop-list-right-sidebar.html">Shop List Right Sidebar</a>
-                      </li>
-                      <li><a href="cart.html">Cart Page</a></li>
-                      <li><a href="checkout.html">Checkout Page</a></li>
-                    </ul>
-                    <ul class="d-block">
-                      <li class="title"><a href="#">product Details Page</a></li>
-                      <li><a href="single-product.html">Product Single</a></li>
-                      <li><a href="single-product-variable.html">Product Variable</a></li>
-                      <li><a href="single-product-affiliate.html">Product Affiliate</a></li>
-                      <li><a href="single-product-group.html">Product Group</a></li>
-                      <li><a href="single-product-tabstyle-2.html">Product Tab 2</a></li>
-                      <li><a href="single-product-tabstyle-3.html">Product Tab 3</a></li>
-                      <li><a href="single-product-slider.html">Product Slider</a></li>
-                      <li><a href="single-product-gallery-left.html">Product Gallery Left</a>
-                      </li>
-                    </ul>
-                    <ul class="d-block">
-                      <li class="title"><a href="#">Single Product Page</a></li>
-                      <li><a href="single-product-gallery-right.html">Product Gallery Right</a></li>
-                      <li><a href="single-product-sticky-left.html">Product Sticky Left</a>
-                      </li>
-                      <li><a href="single-product-sticky-right.html">Product Sticky Right</a>
-                      </li>
-                      <li><a href="compare.html">Compare Page</a></li>
-                      <li><a href="wishlist.html">Wishlist Page</a></li>
-                      <li><a href="my-account.html">Account Page</a></li>
-                      <li><a href="login.html">Login & Register Page</a></li>
-                      <li><a href="empty-cart.html">Empty Cart Page</a></li>
-                    </ul>
-                    <ul class="d-flex align-items-center p-0 border-0 flex-column justify-content-center">
-                      <li>
-                        <a class="p-0" href="shop-left-sidebar.html"><img
-                          class="img-responsive w-100"
-                          src="assets/images/banner/menu-banner-2.png" alt=""></a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li class="dropdown "><a href="#">GIẢM GIÁ ĐẶC BIỆT</a>
-                <ul class="sub-menu">
-                  <li><a href="blog-grid.html">Blog Grid Page</a></li>
-                  <li><a href="blog-grid-left-sidebar.html">Grid Left Sidebar</a></li>
-                  <li><a href="blog-grid-right-sidebar.html">Grid Right Sidebar</a></li>
-                  <li><a href="blog-single.html">Blog Single Page</a></li>
-                  <li><a href="blog-single-left-sidebar.html">Single Left Sidebar</a></li>
-                  <li><a href="blog-single-right-sidebar.html">Single Right Sidbar</a>
-                </ul>
+<!--                      <li class="title"><a href="#">Shop Page</a></li>-->
+<!--                      <li><a href="shop-3-column.html">Shop 3 Column</a></li>-->
+<!--                      <li><a href="shop-4-column.html">Shop 4 Column</a></li>-->
+<!--                      <li><a href="shop-left-sidebar.html">Shop Left Sidebar</a></li>-->
+<!--                      <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>-->
+<!--                      <li><a href="shop-list-left-sidebar.html">Shop List Left Sidebar</a>-->
+<!--                      </li>-->
+<!--                      <li><a href="shop-list-right-sidebar.html">Shop List Right Sidebar</a>-->
+<!--                      </li>-->
+<!--                      <li><a href="cart.html">Cart Page</a></li>-->
+<!--                      <li><a href="checkout.html">Checkout Page</a></li>-->
+<!--                    </ul>-->
+<!--                    <ul class="d-block">-->
+<!--                      <li class="title"><a href="#">product Details Page</a></li>-->
+<!--                      <li><a href="single-product.html">Product Single</a></li>-->
+<!--                      <li><a href="single-product-variable.html">Product Variable</a></li>-->
+<!--                      <li><a href="single-product-affiliate.html">Product Affiliate</a></li>-->
+<!--                      <li><a href="single-product-group.html">Product Group</a></li>-->
+<!--                      <li><a href="single-product-tabstyle-2.html">Product Tab 2</a></li>-->
+<!--                      <li><a href="single-product-tabstyle-3.html">Product Tab 3</a></li>-->
+<!--                      <li><a href="single-product-slider.html">Product Slider</a></li>-->
+<!--                      <li><a href="single-product-gallery-left.html">Product Gallery Left</a>-->
+<!--                      </li>-->
+<!--                    </ul>-->
+<!--                    <ul class="d-block">-->
+<!--                      <li class="title"><a href="#">Single Product Page</a></li>-->
+<!--                      <li><a href="single-product-gallery-right.html">Product Gallery Right</a></li>-->
+<!--                      <li><a href="single-product-sticky-left.html">Product Sticky Left</a>-->
+<!--                      </li>-->
+<!--                      <li><a href="single-product-sticky-right.html">Product Sticky Right</a>-->
+<!--                      </li>-->
+<!--                      <li><a href="compare.html">Compare Page</a></li>-->
+<!--                      <li><a href="wishlist.html">Wishlist Page</a></li>-->
+<!--                      <li><a href="my-account.html">Account Page</a></li>-->
+<!--                      <li><a href="login.html">Login & Register Page</a></li>-->
+<!--                      <li><a href="empty-cart.html">Empty Cart Page</a></li>-->
+<!--                    </ul>-->
+<!--                    <ul class="d-flex align-items-center p-0 border-0 flex-column justify-content-center">-->
+<!--                      <li>-->
+<!--                        <a class="p-0" href="shop-left-sidebar.html"><img-->
+<!--                          class="img-responsive w-100"-->
+<!--                          src="assets/images/banner/menu-banner-2.png" alt=""></a>-->
+<!--                      </li>-->
+<!--                    </ul>-->
+<!--                  </li>-->
+<!--                </ul>-->
+<!--              </li>-->
+              <li class="dropdown "><a routerLink="/sale-special">GIẢM GIÁ ĐẶC BIỆT</a>
+<!--                <ul class="sub-menu">-->
+<!--                  <li><a href="blog-grid.html">Blog Grid Page</a></li>-->
+<!--                  <li><a href="blog-grid-left-sidebar.html">Grid Left Sidebar</a></li>-->
+<!--                  <li><a href="blog-grid-right-sidebar.html">Grid Right Sidebar</a></li>-->
+<!--                  <li><a href="blog-single.html">Blog Single Page</a></li>-->
+<!--                  <li><a href="blog-single-left-sidebar.html">Single Left Sidebar</a></li>-->
+<!--                  <li><a href="blog-single-right-sidebar.html">Single Right Sidbar</a>-->
+<!--                </ul>-->
               </li>
             </ul>
           </div>
@@ -105,12 +107,13 @@
             </a>
             <!-- Single Wedge End -->
             <div class="header-bottom-set dropdown">
-              <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i
+              <button *ngIf="!isLoggedIn" class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i
                 class="pe-7s-users"></i></button>
+              <button *ngIf="isLoggedIn" class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown">{{userName}}</button>
               <ul class="dropdown-menu dropdown-menu-right">
-                <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                <li><a routerLink="/login" class="dropdown-item">Sign in</a></li>
+<!--                <li *ngIf="isLoggedIn"><a class="dropdown-item" >{{userName}}</a></li>-->
+                <li *ngIf="isLoggedIn"><a (click)="logout()" class="dropdown-item">Đăng xuất</a></li>
+                <li *ngIf="!isLoggedIn"><a routerLink="/login" class="dropdown-item">Đăng nhập / Đăng ký</a></li>
               </ul>
             </div>
             <!-- Single Wedge Start -->
@@ -177,6 +180,26 @@
           <a href="#"><i class="fa fa-instagram"></i></a>
         </li>
       </ul>
+    </div>
+  </div>
+</div>
+<!--===============  Modal ========================-->
+<div class="modal popup-search-style" id="searchActive">
+  <button type="button" class="close-btn" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+  <div class="modal-overlay">
+    <div class="modal-dialog p-0" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h2>Tìm tên sản phẩm</h2>
+          <!--              <form class="navbar-form position-relative" role="search">-->
+          <div class="navbar-form position-relative" role="search">
+            <div class="form-group">
+              <input type="text" #name class="form-control" placeholder="Tìm ở đây...">
+            </div>
+<!--            <button type="submit" (click)="searchBookByName(name.value,page)" class="submit-btn"><i class="pe-7s-search"></i></button>-->
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

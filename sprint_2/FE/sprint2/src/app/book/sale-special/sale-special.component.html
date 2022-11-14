@@ -219,8 +219,8 @@
                                           class="new"> - {{bookSlide[0].bookPrice - bookSlide[0].bookPrice * bookSlide[0].bookPromotionId.promotionPercent / 100 | currency : 'VND'}}</span>
                                     </span>
                 <div class="row d-flex justify-content-center button__slide">
-<!--                  <a [routerLink]="['/detail',bookSlide[0].bookId]" class="btn btn-primary  text-uppercase">Xem-->
-<!--                    chi tiết</a>-->
+                  <!--                  <a [routerLink]="['/detail',bookSlide[0].bookId]" class="btn btn-primary  text-uppercase">Xem-->
+                  <!--                    chi tiết</a>-->
                   <a routerLink="" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
                 </div>
               </div>
@@ -252,8 +252,8 @@
                                                 class="new"> - {{bookSlide[1].bookPrice - bookSlide[1].bookPrice * bookSlide[1].bookPromotionId.promotionPercent / 100 | currency : 'VND'}}</span>
                                           </span>
                 <div class="row d-flex justify-content-center button__slide">
-<!--                  <a  class="btn btn-primary  text-uppercase">Xem-->
-<!--                    chi tiết</a>-->
+                  <!--                  <a  class="btn btn-primary  text-uppercase">Xem-->
+                  <!--                    chi tiết</a>-->
                   <a routerLink="" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
                 </div>
               </div>
@@ -287,8 +287,8 @@
                                           class="new"> - {{bookSlide[2].bookPrice - bookSlide[2].bookPrice * bookSlide[2].bookPromotionId.promotionPercent / 100 | currency : 'VND'}}</span>
                                     </span>
                 <div class="row d-flex justify-content-center button__slide">
-<!--                  <a [routerLink]="['/detail',bookSlide[2].bookId]" class="btn btn-primary  text-uppercase">Xem-->
-<!--                    chi tiết</a>-->
+                  <!--                  <a [routerLink]="['/detail',bookSlide[2].bookId]" class="btn btn-primary  text-uppercase">Xem-->
+                  <!--                    chi tiết</a>-->
                   <a routerLink="" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
                 </div>
               </div>
@@ -403,11 +403,11 @@
         </div>
       </div>
     </div>
-    <div *ngIf="totalItems > 8 && title == 'Tất cả sách'" style="display: flex; justify-content: center; align-items: center">
-      <pagination-controls (pageChange)="getBookList($event)"></pagination-controls>
-    </div>
-    <div *ngIf="totalItems > 8 && title !== 'Tất cả sách'" style="display: flex; justify-content: center; align-items: center">
-      <pagination-controls (pageChange)="getBookByCategory(category,$event)"></pagination-controls>
+<!--    <div *ngIf="totalItems > 8 && title == 'Tất cả sách'" style="display: flex; justify-content: center; align-items: center">-->
+<!--      <pagination-controls (pageChange)="getBookList($event)"></pagination-controls>-->
+<!--    </div>-->
+    <div *ngIf="totalItems > 8 " style="display: flex; justify-content: center; align-items: center">
+      <pagination-controls (pageChange)="getBookSaleSpecial($event)"></pagination-controls>
     </div>
     <!-- Product Area End -->
 
@@ -476,7 +476,7 @@
               </div>
               <div class="deal-image d-flex justify-content-end">
                 <img [routerLink]="['/detail',bookBestSale[0].bookId]" class="img-fluid " style="border-radius: 10px; margin-right: 20px; margin-top: 20px" width="56%"  [src]="bookBestSale[0].bookImage" alt="">
-<!--                [src]="bookBestSale[0].bookImage"-->
+                <!--                [src]="bookBestSale[0].bookImage"-->
                 <div class="discount">
                   <h3>{{bookBestSale[0].bookPromotionId.promotionPercent}}%</h3>
                 </div>
@@ -498,7 +498,7 @@
           <div class="col-md-6 p-0">
             <div [routerLink]="['/detail',bookBestSale[1].bookId]" class="single-banner nth-child-1">
               <img  style="object-fit: cover" width="550px" height="550px" [src]="bookBestSale[1].bookImage" alt="">
-<!--              <img src="assets/images/banner/4.jpg" alt="">-->
+              <!--              <img src="assets/images/banner/4.jpg" alt="">-->
               <div class="banner-content nth-child-1">
                 <span class="category">Bán chạy</span>
                 <span class="title">{{bookBestSale[1].bookName}} <br>
@@ -550,7 +550,6 @@
           <div class="modal-content">
             <div class="modal-body">
               <h2>Tìm tên sản phẩm</h2>
-<!--              <form class="navbar-form position-relative" role="search">-->
               <div class="navbar-form position-relative" role="search">
                 <div class="form-group">
                   <input type="text" #name class="form-control" placeholder="Tìm ở đây...">

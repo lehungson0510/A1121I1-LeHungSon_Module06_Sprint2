@@ -17,7 +17,31 @@ export class BookService {
     return this.http.get<IBook[]>(this.API_URL + '/slide');
   }
 
-  getBookList(): Observable<IBook[]> {
-    return this.http.get<IBook[]>(this.API_URL + '/list');
+  getBookList(page: number): Observable<IBook[]> {
+    return this.http.get<IBook[]>(this.API_URL + '/list?page=' + page);
+  }
+
+  getBookById(id: number): Observable<IBook> {
+    return this.http.get<IBook>(this.API_URL + '/detail/' + id);
+  }
+
+  getBookSameAuthor(idAuthor: number, idBook: number): Observable<IBook[]> {
+    return this.http.get<IBook[]>(this.API_URL + '/same-author?idAuthor=' + idAuthor + '&idBook=' + idBook);
+  }
+
+  getBookBestSale(): Observable<IBook[]> {
+    return this.http.get<IBook[]>(this.API_URL + '/best-sale');
+  }
+
+  getBookByCategory(idCategory: number, page: number): Observable<IBook[]> {
+    return this.http.get<IBook[]>(this.API_URL + '/find-book-by-category/' + idCategory + '?page=' + page);
+  }
+
+  getBookByName(name: string, page: number): Observable<IBook[]> {
+    return this.http.get<IBook[]>(this.API_URL + '/find-book-by-name?name=' + name + '&page=' + page);
+  }
+
+  getBookSaleSpecial(page: number): Observable<IBook[]> {
+    return this.http.get<IBook[]>(this.API_URL + '/sale-special?page=' + page);
   }
 }
