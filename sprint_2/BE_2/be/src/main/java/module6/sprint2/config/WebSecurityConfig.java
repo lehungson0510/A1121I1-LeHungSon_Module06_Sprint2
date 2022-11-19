@@ -41,40 +41,42 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity.cors();
-//        httpSecurity.csrf().disable()
-//                .authorizeRequests()
-////                .antMatchers("/auth/login").permitAll()
-////                .antMatchers(HttpHeaders.ALLOW).permitAll()
-//                .antMatchers("/api/account/**", "/api/customer/**", "/api/book/**", "/api/cart/**").hasAnyAuthority("ROLE_ADMIN")
-//                .antMatchers("/api/account/**", "/api/customer/**", "/api/book/book-user/**", "/api/cart/**").hasAnyAuthority("ROLE_USER")
-////                .antMatchers("/api/customer/**", "/api/employee/**").hasAuthority("ROLE_SELL")
-//                .antMatchers("/**/*.js", "/**/*.css", "/**/*.jpg", "/**/*.png").permitAll()
-//                .and().authorizeRequests().antMatchers("/auth/login").permitAll()
-//                .antMatchers(HttpHeaders.ALLOW).permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//        ;
-//        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
         httpSecurity.cors();
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/auth/login").permitAll()
+                .authorizeRequests()
+//                .antMatchers("/auth/login").permitAll()
+//                .antMatchers(HttpHeaders.ALLOW).permitAll()
+                .antMatchers("/api/book/book-user/no-login/**").permitAll()
                 .antMatchers(HttpHeaders.ALLOW).permitAll()
-//                .antMatchers(GET,"/welcome").hasAnyAuthority("ROLE_ADMIN")
-//                .antMatchers("/api/customer/**", "/api/import/**", "/api/cart/**").hasAnyAuthority("ROLE_ACCOUNTANT")
+                .antMatchers("/api/account/**", "/api/customer/**", "/api/book/**", "/api/cart/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/api/account/**", "/api/customer/**", "/api/book/**", "/api/cart/**").hasAnyAuthority("ROLE_USER")
 //                .antMatchers("/api/customer/**", "/api/employee/**").hasAuthority("ROLE_SELL")
-//                .antMatchers(  "/**/*.js", "/**/*.css", "/**/*.jpg", "/**/*.png").permitAll()
-//                .anyRequest().authenticated()
+                .antMatchers("/**/*.js", "/**/*.css", "/**/*.jpg", "/**/*.png").permitAll()
+                .and().authorizeRequests().antMatchers("/auth/login").permitAll()
+                .antMatchers(HttpHeaders.ALLOW).permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         ;
-        httpSecurity.addFilterBefore(jwtRequestFilter , UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//        httpSecurity.cors();
+//        httpSecurity.csrf().disable()
+//                .authorizeRequests().antMatchers("/auth/login").permitAll()
+//                .antMatchers(HttpHeaders.ALLOW).permitAll()
+////                .antMatchers(GET,"/welcome").hasAnyAuthority("ROLE_ADMIN")
+////                .antMatchers("/api/customer/**", "/api/import/**", "/api/cart/**").hasAnyAuthority("ROLE_ACCOUNTANT")
+////                .antMatchers("/api/customer/**", "/api/employee/**").hasAuthority("ROLE_SELL")
+////                .antMatchers(  "/**/*.js", "/**/*.css", "/**/*.jpg", "/**/*.png").permitAll()
+////                .anyRequest().authenticated()
+//                .and()
+//                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+//                .and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//        ;
+//        httpSecurity.addFilterBefore(jwtRequestFilter , UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

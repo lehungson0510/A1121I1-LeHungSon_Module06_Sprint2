@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,5 +55,15 @@ public class BookServiceImpl implements IBookService {
     @Override
     public Page<Book> findBookSaleSpecial(Pageable pageable) {
         return bookRepository.findBookSaleSpecial(pageable);
+    }
+
+    @Override
+    public void editBook(String name, String img, String content, Double price, String translator, Integer totalPage, String size, LocalDate publishDate, Integer quantity, String publisher, Long idCategory, Long idAuthor, Long idPromotion, Long idBook) {
+        bookRepository.editBook(name, img, content, price, translator, totalPage, size, publishDate, quantity, publisher,idCategory, idAuthor, idPromotion,idBook);
+    }
+
+    @Override
+    public Page<Book> findBookBestSeller(Pageable pageable) {
+        return bookRepository.findBookBestSeller(pageable);
     }
 }
