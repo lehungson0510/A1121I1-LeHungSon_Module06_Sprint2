@@ -2,7 +2,7 @@
   <div style="background-color: 	rgba(70,63,57,0.5); color: white" class=" py-2">
     <!--  #E5DFDB-->
     <div class="container ">
-      <div class="row d-flex justify-content-center">
+      <div class="row d-flex justify-content-center header_custom">
         <div class="col-md-2 " style="font-size: 13px; cursor: pointer; font-weight: 600">GIỚI THIỆU</div>
         <div class="col-md-2 " style="font-size: 13px; cursor: pointer; font-weight: 600">LỊCH SỬ GIAO DỊCH</div>
         <div class="col-md-2" style="font-size: 13px; cursor: pointer; font-weight: 600">KIỂM TRA ĐƠN HÀNG</div>
@@ -32,7 +32,7 @@
                   <!--                  <li><a href="#">2</a></li>-->
                 </ul>
               </li>
-              <li><a href="#">Sách bán chạy</a></li>
+              <li><a routerLink="/book-best-sell">Sách bán chạy</a></li>
 <!--              <li class="dropdown position-static"><a href="#">CHƯƠNG TRÌNH KHUYẾN MÃI</a>-->
 <!--                <ul class="mega-menu d-block">-->
 <!--                  <li class="d-flex">-->
@@ -102,14 +102,14 @@
         <div class="col col-lg-auto align-self-center pl-0">
           <div class="header-actions">
             <!-- Single Wedge Start -->
-            <a href="#" class="header-action-btn" data-bs-toggle="modal" data-bs-target="#searchActive">
+            <a href="" class="header-action-btn" data-bs-toggle="modal" data-bs-target="#searchActive">
               <i class="pe-7s-search"></i>
             </a>
             <!-- Single Wedge End -->
             <div class="header-bottom-set dropdown">
               <button *ngIf="!isLoggedIn" class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i
                 class="pe-7s-users"></i></button>
-              <button *ngIf="isLoggedIn" class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown">{{userName}}</button>
+              <button *ngIf="isLoggedIn" class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown" style="font-weight: bolder ;color: #ffa500; font-size: 17px">{{userName}}</button>
               <ul class="dropdown-menu dropdown-menu-right">
 <!--                <li *ngIf="isLoggedIn"><a class="dropdown-item" >{{userName}}</a></li>-->
                 <li *ngIf="isLoggedIn"><a (click)="logout()" class="dropdown-item">Đăng xuất</a></li>
@@ -121,7 +121,7 @@
               <i class="pe-7s-like"></i>
             </a>
             <!-- Single Wedge End -->
-            <a routerLink="/cart"
+            <a *ngIf="isLoggedIn" routerLink="/cart"
                class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
               <i class="pe-7s-shopbag"></i>
               <span class="header-action-num">01</span>
@@ -194,9 +194,9 @@
           <!--              <form class="navbar-form position-relative" role="search">-->
           <div class="navbar-form position-relative" role="search">
             <div class="form-group">
-              <input type="text" #name class="form-control" placeholder="Tìm ở đây...">
+              <input type="text" #name  class="form-control"  placeholder="Tìm ở đây...">
             </div>
-<!--            <button type="submit" (click)="searchBookByName(name.value,page)" class="submit-btn"><i class="pe-7s-search"></i></button>-->
+            <button type="submit" data-bs-dismiss="modal" (click)="getNameSearch(name.value)" class="submit-btn"><i class="pe-7s-search" ></i></button>
           </div>
         </div>
       </div>

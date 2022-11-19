@@ -1,0 +1,94 @@
+/*============================= CSS BUTTON PAGINATION =========================*/
+
+  :host /deep/ .ngx-pagination .pagination-next a::after {
+    content: none;
+  }
+
+  :host /deep/ .ngx-pagination .pagination-previous a::before {
+    content: none;
+  }
+
+  :host /deep/ .ngx-pagination .pagination-previous.disabled::before {
+    content: none;
+  }
+
+  :host /deep/ .ngx-pagination .pagination-next.disabled::after {
+    content: none;
+  }
+
+  :host /deep/ .ngx-pagination .pagination-next {
+    font-weight: bolder;
+  }
+
+  :host /deep/ .ngx-pagination .pagination-previous {
+    font-weight: bolder;
+  }
+
+  :host /deep/ .ngx-pagination a:hover {
+    background-color: #A5C9CA;
+  }
+
+  :host /deep/ .ngx-pagination a {
+    border-radius: 20px;
+    background-color: whitesmoke;
+  }
+
+  :host /deep/ .ngx-pagination{
+    padding: 7px 20px;
+    border-radius: 10px;
+    background-color: whitesmoke;
+  }
+
+  :host /deep/ .ngx-pagination .current,
+  .btn-info {
+    background: #eaaa85 !important;
+    border-radius: 20px;
+  }
+
+  :host /deep/ .ngx-pagination .current:hover {
+    background: #eaaa85 !important;
+    border-radius: 20px;
+  }
+
+img{
+  cursor: pointer;
+}
+
+.quickview-content span {
+  font-weight: bolder;
+}
+
+.load__more .btn:hover {
+  background-color: black;
+  color: whitesmoke;
+}
+
+.load__more .btn {
+  background-color: #eaaa85;
+  color: whitesmoke;
+}
+
+.quickview-content span {
+  font-weight: bolder;
+}
+
+.main-menu ul li.dropdown ul.sub-menu {
+  z-index: 10;
+}
+
+.deal-wrapper .title, .modal-2 h2 {
+  font-weight: 600;
+}
+
+.deal-image .discount {
+  bottom: 10px;
+}
+
+.deal-image img, .single-banner img, .single-banner {
+  cursor: pointer;
+}
+
+
+.banner-content .category, .title {
+  font-family: "Segoe UI";
+}

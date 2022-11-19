@@ -70,10 +70,11 @@
           <p class="mt-20px mb-0">
             Mã sản phẩm: <span>{{bookDetail.bookCode}}</span>
           </p>
-          <p class="mt-lg-1 mb-0">
+          <p class="mt-lg-1 mb-0" >
             Tác giả: <span>{{bookDetail.bookAuthorId.authorName}}</span>
           </p>
           <p class="mt-lg-1 mb-0">
+<!--          <p class="mt-lg-1 mb-0" *ngIf="bookDetail.bookTranslator != ''">-->
             Dịch giả: <span>{{bookDetail.bookTranslator}}</span>
           </p>
           <p class="mt-lg-1 mb-0">
@@ -90,13 +91,13 @@
           </p>
           <div class="pro-details-quality">
             <div class="cart-plus-minus">
-              <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
+              <input class="cart-plus-minus-box" type="number" min="0" name="qtybutton" value="1" />
             </div>
-            <div class="pro-details-cart">
+            <div routerLink="/cart" class="pro-details-cart">
               <button class="add-cart"> THÊM VÀO GIỎ
               </button>
             </div>
-            <div class="pro-details-cart">
+            <div routerLink="/cart" class="pro-details-cart">
               <button class="add-cart buy-button"> MUA NGAY</button>
             </div>
             <div class="pro-details-compare-wishlist pro-details-wishlist ">
@@ -288,7 +289,8 @@
 </div>
 <!-- product details description area end -->
 
-<!-- Related product Area Start -->
+
+<!-- Related product Area Start-->
 <div class="related-product-area" *ngIf="bookSameAuthor.length >=1 ">
   <div class="container">
     <div class="row">
@@ -323,11 +325,12 @@
             <div class="actions">
               <a href="" class="action wishlist" title="Wishlist"><i
                 class="pe-7s-like"></i></a>
-              <a (click)="getBookDetailQuickView(authorSame)" class="action quickview" data-link-action="quickview"
+              <a  (click)="getBookDetailQuickView(authorSame)" class="action quickview" data-link-action="quickview"
                  title="Chi tiết" data-bs-toggle="modal"
                  data-bs-target="#exampleModal"><i class="pe-7s-look"></i></a>
-              <a class="action compare" title="Compare"><i
-                class="pe-7s-refresh-2"></i></a>
+              <a *ngIf="isLoggedIn && showAdminBoard"  [routerLink]="['/edit',authorSame.bookId]" class="action quickview" data-link-action="quickview"
+                 title="Chỉnh sửa"><i class="pe-7s-pen"></i></a>
+              <a *ngIf="isLoggedIn && showAdminBoard" class="action quickview" title="Xóa"><i class="fa-regular fa-trash-can"></i></a>
             </div>
           </div>
           <div class="content">
@@ -344,13 +347,15 @@
                                                 <span class="new">{{authorSame.bookPrice - authorSame.bookPrice*authorSame.bookPromotionId.promotionPercent/100| currency : 'VND'}}</span>
                                             </span>
           </div>
-          <button title="Add To Cart" class=" add-to-cart">THÊM VÀO GIỎ
+          <button routerLink="/cart" title="Add To Cart" class=" add-to-cart">THÊM VÀO GIỎ
           </button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
 <div class="modal modal-2 fade" id="exampleModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -427,9 +432,9 @@
               </p>
               <div class="pro-details-quality">
                 <div class="cart-plus-minus">
-                  <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1"/>
+                  <input class="cart-plus-minus-box" type="number" min="1" name="qtybutton" value="1"/>
                 </div>
-                <div class="pro-details-cart">
+                <div routerLink="/cart" class="pro-details-cart">
                   <button class="add-cart"> THÊM VÀO GIỎ
                   </button>
                 </div>

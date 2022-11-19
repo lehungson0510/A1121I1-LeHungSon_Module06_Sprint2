@@ -5,3 +5,11 @@
 .dropdown-menu li:hover{
   cursor: pointer;
 }
+
+.header-bottom-set .dropdown-menu{
+  inset: 45px -73px auto auto !important;
+}
+
+.header_custom div:hover{
+  color: rgb(234, 170, 133);
+}

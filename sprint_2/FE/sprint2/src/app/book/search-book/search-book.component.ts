@@ -4,17 +4,15 @@ import {ICategory} from '../../model/book/ICategory';
 import {BookService} from '../../service/book/book.service';
 import {CategoryService} from '../../service/book/category.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {FormGroup} from '@angular/forms';
 import {TokenStorageService} from '../../service/security/token-storage.service';
 
 @Component({
-  selector: 'app-sale-special',
-  templateUrl: './sale-special.component.html',
-  styleUrls: ['./sale-special.component.css']
+  selector: 'app-search-book',
+  templateUrl: './search-book.component.html',
+  styleUrls: ['./search-book.component.css']
 })
-export class SaleSpecialComponent implements OnInit {
-
-  idCategory: number;
-
+export class SearchBookComponent implements OnInit {
   bookSlide: IBook[] = [{
     bookCategoryId: {},
     bookPromotionId: {},
@@ -43,9 +41,9 @@ export class SaleSpecialComponent implements OnInit {
 
   category: ICategory;
 
-  title = 'Các sách được giảm giá';
+  title = 'Tuyển tập sách';
 
-  nameSearch = '';
+  nameSearch: string;
 
   bookBestSale: IBook[] = [{
     bookCategoryId: {},
@@ -69,10 +67,14 @@ export class SaleSpecialComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.getBookSaleSpecial(1);
+    this.activatedRoute.paramMap.subscribe((param) => {
+      this.nameSearch = param.get('name');
+      this.getBookSlide();
+      // this.getBookList(this.page - 1);
+      this.searchBookByName(this.nameSearch, 1);
       this.getAllCategory();
       this.getBestSale();
-      this.getBookSlide();
+    });
 
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
@@ -92,7 +94,7 @@ export class SaleSpecialComponent implements OnInit {
     document.documentElement.scrollTop = 0;
   }
 
-  topCategory() {
+  topSearch() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 641;
   }
@@ -105,16 +107,16 @@ export class SaleSpecialComponent implements OnInit {
     );
   }
 
-  getBookList(page: number) {
-    this.page = page;
-    this.bookService.getBookList(this.page - 1).subscribe(
-      (data: any) => {
-        this.bookList = data.content;
-        this.size = data.size;
-        this.totalItems = data.totalElements;
-      }
-    );
-  }
+  // getBookList(page: number) {
+  //   this.page = page;
+  //   this.bookService.getBookList(this.page - 1).subscribe(
+  //     (data: any) => {
+  //       this.bookList = data.content;
+  //       this.size = data.size;
+  //       this.totalItems = data.totalElements;
+  //     }
+  //   );
+  // }
 
   getBookDetail(bookDetail: IBook) {
     this.bookDetail = bookDetail;
@@ -129,21 +131,21 @@ export class SaleSpecialComponent implements OnInit {
     );
   }
 
-  getBookByCategory(page: number) {
-    this.page = page;
-    this.bookService.getBookByCategory(this.idCategory, this.page - 1).subscribe(
-      (data: any) => {
-        this.bookList = data.content;
-        this.size = data.size;
-        this.totalItems = data.totalElements;
-      },
-      () => {
-      },
-      () => {
-        this.topCategory();
-      }
-    );
-  }
+  // getBookByCategory(page: number) {
+  //   this.page = page;
+  //   this.bookService.getBookByCategory(this.idCategory, this.page - 1).subscribe(
+  //     (data: any) => {
+  //       this.bookList = data.content;
+  //       this.size = data.size;
+  //       this.totalItems = data.totalElements;
+  //     },
+  //     () => {
+  //     },
+  //     () => {
+  //       this.topCategory();
+  //     }
+  //   );
+  // }
 
   getBestSale() {
     this.bookService.getBookBestSale().subscribe(
@@ -154,30 +156,19 @@ export class SaleSpecialComponent implements OnInit {
   }
 
   searchBookByName(name: string, page: number) {
-    this.page = page;
-    this.nameSearch = name;
+    console.log('SEARCH');
     console.log(name);
-    this.bookService.getBookByName(name, this.page - 1).subscribe(
-      (data: any) => {
-        this.bookList = data.content;
-        this.size = data.size;
-        this.totalItems = data.totalElements;
-      }
-    );
-  }
-
-  getBookSaleSpecial(page: number) {
     this.page = page;
-    this.bookService.getBookSaleSpecial(this.page - 1).subscribe(
+    this.bookService.getBookByName(this.nameSearch, this.page - 1).subscribe(
       (data: any) => {
         this.bookList = data.content;
         this.size = data.size;
         this.totalItems = data.totalElements;
       },
+      (error => {
+      }),
       () => {
-      },
-      () => {
-        this.topCategory();
+        this.topSearch();
       }
     );
   }

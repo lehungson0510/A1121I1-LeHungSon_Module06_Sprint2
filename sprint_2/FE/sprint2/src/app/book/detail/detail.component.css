@@ -23,3 +23,7 @@ h2{
   font-weight: 600
 }
 
+.product-details-content .pro-details-quality .cart-plus-minus input.cart-plus-minus-box{
+  padding: 0;
+}
+

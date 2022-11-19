@@ -7,52 +7,52 @@
 <!-- OffCanvas Wishlist Start -->
 <!-- OffCanvas Wishlist End -->
 <!-- OffCanvas Cart Start -->
-<div id="offcanvas-cart" class="offcanvas offcanvas-cart">
-  <div class="inner">
-    <div class="head">
-      <span class="title">Cart</span>
-      <button class="offcanvas-close">×</button>
-    </div>
+<!--<div id="offcanvas-cart" class="offcanvas offcanvas-cart">-->
+<!--  <div class="inner">-->
+<!--    <div class="head">-->
+<!--      <span class="title">Cart</span>-->
+<!--      <button class="offcanvas-close">×</button>-->
+<!--    </div>-->
 
-    <div class="body customScroll">
-      <ul class="minicart-product-list">
-        <li>
-          <a href="single-product.html" class="image"><img src="assets/images/product-image/1.jpg"
-                                                           alt="Cart product Image"></a>
-          <div class="content">
-            <a href="single-product.html" class="title">Hand-Made Garlic Mortar</a>
-            <span class="quantity-price">1 x <span class="amount">$18.86</span></span>
-            <a href="#" class="remove">×</a>
-          </div>
-        </li>
-        <li>
-          <a href="single-product.html" class="image"><img src="assets/images/product-image/2.jpg"
-                                                           alt="Cart product Image"></a>
-          <div class="content">
-            <a href="single-product.html" class="title">Handmade Ceramic Pottery</a>
-            <span class="quantity-price">1 x <span class="amount">$43.28</span></span>
-            <a href="#" class="remove">×</a>
-          </div>
-        </li>
-        <li>
-          <a href="single-product.html" class="image"><img src="assets/images/product-image/3.jpg"
-                                                           alt="Cart product Image"></a>
-          <div class="content">
-            <a href="single-product.html" class="title">Hand Painted Bowls</a>
-            <span class="quantity-price">1 x <span class="amount">$37.34</span></span>
-            <a href="#" class="remove">×</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div class="foot">
-      <div class="buttons mt-30px">
-        <a href="cart.html" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>
-        <a href="checkout.html" class="btn btn-outline-dark current-btn">checkout</a>
-      </div>
-    </div>
-  </div>
-</div>
+<!--    <div class="body customScroll">-->
+<!--      <ul class="minicart-product-list">-->
+<!--        <li>-->
+<!--          <a href="single-product.html" class="image"><img src="assets/images/product-image/1.jpg"-->
+<!--                                                           alt="Cart product Image"></a>-->
+<!--          <div class="content">-->
+<!--            <a href="single-product.html" class="title">Hand-Made Garlic Mortar</a>-->
+<!--            <span class="quantity-price">1 x <span class="amount">$18.86</span></span>-->
+<!--            <a href="#" class="remove">×</a>-->
+<!--          </div>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="single-product.html" class="image"><img src="assets/images/product-image/2.jpg"-->
+<!--                                                           alt="Cart product Image"></a>-->
+<!--          <div class="content">-->
+<!--            <a href="single-product.html" class="title">Handmade Ceramic Pottery</a>-->
+<!--            <span class="quantity-price">1 x <span class="amount">$43.28</span></span>-->
+<!--            <a href="#" class="remove">×</a>-->
+<!--          </div>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="single-product.html" class="image"><img src="assets/images/product-image/3.jpg"-->
+<!--                                                           alt="Cart product Image"></a>-->
+<!--          <div class="content">-->
+<!--            <a href="single-product.html" class="title">Hand Painted Bowls</a>-->
+<!--            <span class="quantity-price">1 x <span class="amount">$37.34</span></span>-->
+<!--            <a href="#" class="remove">×</a>-->
+<!--          </div>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--    <div class="foot">-->
+<!--      <div class="buttons mt-30px">-->
+<!--        <a href="cart.html" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>-->
+<!--        <a href="checkout.html" class="btn btn-outline-dark current-btn">checkout</a>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 <!-- OffCanvas Cart End -->
 
 <!-- OffCanvas Menu Start -->
@@ -78,19 +78,20 @@
 <!-- breadcrumb-area end -->
 
 
-
 <!-- Cart Area Start -->
 <div class="cart-main-area pt-100px pb-100px">
   <div class="container">
-    <h3 class="cart-page-title text-center" style="font-family: 'Copperplate Gothic Bold'; font-weight: bolder; font-size: 30px">Vật phẩm</h3>
+    <h3 class="cart-page-title text-center"
+        style="font-family: 'Copperplate Gothic Bold'; font-weight: bolder; font-size: 30px">Vật phẩm</h3>
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-12">
         <div action="#">
-<!--        <form action="#">-->
+          <!--        <form action="#">-->
           <div class="table-content table-responsive cart-table-content">
             <table>
               <thead>
               <tr>
+                <th  class=" m-0"><input type="checkbox" (change)="isAllChecked()" [checked]="checkAll"></th>
                 <th>Ảnh</th>
                 <th>Tên sản phẩm</th>
                 <th>Giá cả</th>
@@ -100,63 +101,69 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
+              <tr
+                *ngFor="let cartBook of cartBookList, index as i">
+                <td style="width: 5px" class=" m-0"><input type="checkbox" (change)="isChecked(i)"  [checked]="checkList[i]"></td>
                 <td class="product-thumbnail">
-                  <a href="#"><img class="img-responsive ml-15px"
-                                   src="assets/images/product-image/1.jpg" alt="" /></a>
+                  <a [routerLink]="['/detail',cartBook.bookId.bookId]"><img class="img-responsive ml-15px"
+                                                                            [src]="cartBook.bookId.bookImage"
+                                                                            alt=""/></a>
                 </td>
-                <td class="product-name"><a href="#">Product Name</a></td>
-                <td class="product-price-cart"><span class="amount">$60.00</span></td>
+                <td class="product-name"><a
+                  [routerLink]="['/detail',cartBook.bookId.bookId]">{{cartBook.bookId.bookName}}</a></td>
+                <td class="product-price-cart"><span
+                  class="amount">{{cartBook.bookId.bookPrice - cartBook.bookId.bookPrice * cartBook.bookId.bookPromotionId.promotionPercent / 100 | currency : 'VND'}}</span>
+                </td>
                 <td class="product-quantity">
                   <div class="cart-plus-minus">
-                    <input class="cart-plus-minus-box" type="text" name="qtybutton"
-                           value="1" />
+                    <input class="cart-plus-minus-box" #quantity (change)="changeQuantity(cartBook,quantity.value)" min="1" type="number" name="qtybutton"
+                           value="{{cartBook.cartId.cartQuantity}}"/>
                   </div>
                 </td>
-                <td class="product-subtotal">$70.00</td>
+                <td class="product-subtotal">{{totalMoneyPerProduct[i] | currency : 'VND'}}</td>
                 <td class="product-remove">
                   <a href="#"><i class="fa fa-pencil"></i></a>
                   <a href="#"><i class="fa fa-times"></i></a>
                 </td>
               </tr>
-              <tr>
-                <td class="product-thumbnail">
-                  <a href="#"><img class="img-responsive ml-15px"
-                                   src="assets/images/product-image/2.jpg" alt="" /></a>
-                </td>
-                <td class="product-name"><a href="#">Product Name</a></td>
-                <td class="product-price-cart"><span class="amount">$50.00</span></td>
-                <td class="product-quantity">
-                  <div class="cart-plus-minus">
-                    <input class="cart-plus-minus-box" type="text" name="qtybutton"
-                           value="1" />
-                  </div>
-                </td>
-                <td class="product-subtotal">$80.00</td>
-                <td class="product-remove">
-                  <a href="#"><i class="fa fa-pencil"></i></a>
-                  <a href="#"><i class="fa fa-times"></i></a>
-                </td>
-              </tr>
-              <tr>
-                <td class="product-thumbnail">
-                  <a href="#"><img class="img-responsive ml-15px"
-                                   src="assets/images/product-image/3.jpg" alt="" /></a>
-                </td>
-                <td class="product-name"><a href="#">Product Name</a></td>
-                <td class="product-price-cart"><span class="amount">$70.00</span></td>
-                <td class="product-quantity">
-                  <div class="cart-plus-minus">
-                    <input class="cart-plus-minus-box" type="text" name="qtybutton"
-                           value="1" />
-                  </div>
-                </td>
-                <td class="product-subtotal">$90.00</td>
-                <td class="product-remove">
-                  <a href="#"><i class="fa fa-pencil"></i></a>
-                  <a href="#"><i class="fa fa-times"></i></a>
-                </td>
-              </tr>
+              <!--              <tr>-->
+              <!--                <td class="product-thumbnail">-->
+              <!--                  <a href="#"><img class="img-responsive ml-15px"-->
+              <!--                                   src="assets/images/product-image/2.jpg" alt="" /></a>-->
+              <!--                </td>-->
+              <!--                <td class="product-name"><a href="#">Product Name</a></td>-->
+              <!--                <td class="product-price-cart"><span class="amount">$50.00</span></td>-->
+              <!--                <td class="product-quantity">-->
+              <!--                  <div class="cart-plus-minus">-->
+              <!--                    <input class="cart-plus-minus-box" type="text" name="qtybutton"-->
+              <!--                           value="1" />-->
+              <!--                  </div>-->
+              <!--                </td>-->
+              <!--                <td class="product-subtotal">$80.00</td>-->
+              <!--                <td class="product-remove">-->
+              <!--                  <a href="#"><i class="fa fa-pencil"></i></a>-->
+              <!--                  <a href="#"><i class="fa fa-times"></i></a>-->
+              <!--                </td>-->
+              <!--              </tr>-->
+              <!--              <tr>-->
+              <!--                <td class="product-thumbnail">-->
+              <!--                  <a href="#"><img class="img-responsive ml-15px"-->
+              <!--                                   src="assets/images/product-image/3.jpg" alt="" /></a>-->
+              <!--                </td>-->
+              <!--                <td class="product-name"><a href="#">Product Name</a></td>-->
+              <!--                <td class="product-price-cart"><span class="amount">$70.00</span></td>-->
+              <!--                <td class="product-quantity">-->
+              <!--                  <div class="cart-plus-minus">-->
+              <!--                    <input class="cart-plus-minus-box" type="text" name="qtybutton"-->
+              <!--                           value="1" />-->
+              <!--                  </div>-->
+              <!--                </td>-->
+              <!--                <td class="product-subtotal">$90.00</td>-->
+              <!--                <td class="product-remove">-->
+              <!--                  <a href="#"><i class="fa fa-pencil"></i></a>-->
+              <!--                  <a href="#"><i class="fa fa-times"></i></a>-->
+              <!--                </td>-->
+              <!--              </tr>-->
               </tbody>
             </table>
           </div>
@@ -211,7 +218,7 @@
                     <label>
                       * Zip/Postal Code
                     </label>
-                    <input type="text" />
+                    <input type="text"/>
                   </div>
                   <button class="cart-btn-2" type="submit">Get A Quote</button>
                 </div>
@@ -226,8 +233,8 @@
               <div class="discount-code">
                 <p>Nhập mã giảm giá nếu có.</p>
                 <div>
-<!--                <form>-->
-                  <input type="text" required="" name="name" />
+                  <!--                <form>-->
+                  <input type="text" required="" name="name"/>
                   <button class="cart-btn-2" type="submit">Áp dụng</button>
                 </div>
               </div>
@@ -238,19 +245,19 @@
               <div class="title-wrap">
                 <h4 class="cart-bottom-title section-bg-gary-cart">Giỏ hàng</h4>
               </div>
-              <h5>Tổng tiền sản phẩm <span>$260.00</span></h5>
+              <h5>Tổng tiền sản phẩm <span>{{totalMoney | currency:'VND'}}</span></h5>
               <div class="total-shipping">
                 <h5>Phí vận chuyển</h5>
                 <ul>
-                  <li><input type="checkbox" /> Tiêu chuẩn <span>$20.00</span></li>
-                  <li><input type="checkbox" /> Nhanh <span>$30.00</span></li>
+                  <li><input type="checkbox"/> Tiêu chuẩn <span>$20.00</span></li>
+                  <li><input type="checkbox"/> Nhanh <span>$30.00</span></li>
                 </ul>
               </div>
               <div class="total-shipping">
                 <h5>Ưu đãi</h5>
                 <ul>
-                  <li><input type="checkbox" /> VIP <span>- 30%</span></li>
-                  <li><input type="checkbox" /> Thường <span>- 10%</span></li>
+                  <li><input type="checkbox"/> VIP <span>- 30%</span></li>
+                  <li><input type="checkbox"/> Thường <span>- 10%</span></li>
                 </ul>
               </div>
               <h4 class="grand-totall-title">Tổng tiền <span>$260.00</span></h4>

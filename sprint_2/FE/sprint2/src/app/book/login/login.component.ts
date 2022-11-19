@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit {
       this.role = this.tokenStorageService.getUser().roles[0].roleName;
       this.username = this.tokenStorageService.getUser().account.username;
       this.router.navigate(['']);
-
     }
   }
 

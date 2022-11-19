@@ -15,7 +15,7 @@ export class CategoryService {
   }
 
   findAllCategory(): Observable<ICategory[]> {
-    return this.http.get<ICategory[]>(this.API_URL + '/category');
+    return this.http.get<ICategory[]>(this.API_URL + '/book-user/no-login/category');
   }
 
 }

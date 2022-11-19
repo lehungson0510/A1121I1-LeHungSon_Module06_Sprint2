@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   private roles: string[];
   isLoggedIn = false;
   showAdminBoard = false;
+  showUser = false;
   showAccountantBoard = false;
   showSellBoard = false;
   userName: string;
@@ -32,6 +33,7 @@ export class HeaderComponent implements OnInit {
       this.userName = this.tokenStorageService.getUser().account.username;
       this.roles = this.tokenStorageService.getUser().account.roles[0].roleName;
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showUser = this.roles.includes('ROLE_USER');
       this.showAccountantBoard = this.roles.includes('ROLE_ACCOUNTANT');
       this.showSellBoard = this.roles.includes('ROLE_SELL');
 
@@ -51,5 +53,9 @@ export class HeaderComponent implements OnInit {
         this.categoryList = data;
       }
     );
+  }
+
+  getNameSearch(value: string) {
+    this.router.navigateByUrl('/search/' + value);
   }
 }

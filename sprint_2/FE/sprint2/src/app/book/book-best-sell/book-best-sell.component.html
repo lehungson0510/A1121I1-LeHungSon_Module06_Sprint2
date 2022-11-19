@@ -185,7 +185,6 @@
 </div>
 
 
-
 <!--================================= END HEADER =================================-->
 
 <body>
@@ -219,8 +218,8 @@
                                           class="new"> - {{bookSlide[0].bookPrice - bookSlide[0].bookPrice * bookSlide[0].bookPromotionId.promotionPercent / 100 | currency : 'VND'}}</span>
                                     </span>
                 <div class="row d-flex justify-content-center button__slide">
-<!--                  <a [routerLink]="['/detail',bookSlide[0].bookId]" class="btn btn-primary  text-uppercase">Xem-->
-<!--                    chi tiết</a>-->
+                  <!--                  <a [routerLink]="['/detail',bookSlide[0].bookId]" class="btn btn-primary  text-uppercase">Xem-->
+                  <!--                    chi tiết</a>-->
                   <a routerLink="/cart" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
                 </div>
               </div>
@@ -229,7 +228,8 @@
               class="col-xl-6 col-lg-6 col-md-6 col-sm-6 d-flex justify-content-center position-relative">
               <div class="show-case">
                 <div class="">
-                  <img width="70%" [routerLink]="['/detail',bookSlide[0].bookId]" [src]="bookSlide[0].bookImage" alt=""/>
+                  <img width="70%" [routerLink]="['/detail',bookSlide[0].bookId]" [src]="bookSlide[0].bookImage"
+                       alt=""/>
                 </div>
               </div>
             </div>
@@ -252,8 +252,8 @@
                                                 class="new"> - {{bookSlide[1].bookPrice - bookSlide[1].bookPrice * bookSlide[1].bookPromotionId.promotionPercent / 100 | currency : 'VND'}}</span>
                                           </span>
                 <div class="row d-flex justify-content-center button__slide">
-<!--                  <a  class="btn btn-primary  text-uppercase">Xem-->
-<!--                    chi tiết</a>-->
+                  <!--                  <a  class="btn btn-primary  text-uppercase">Xem-->
+                  <!--                    chi tiết</a>-->
                   <a routerLink="/cart" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
                 </div>
               </div>
@@ -287,9 +287,9 @@
                                           class="new"> - {{bookSlide[2].bookPrice - bookSlide[2].bookPrice * bookSlide[2].bookPromotionId.promotionPercent / 100 | currency : 'VND'}}</span>
                                     </span>
                 <div class="row d-flex justify-content-center button__slide">
-<!--                  <a [routerLink]="['/detail',bookSlide[2].bookId]" class="btn btn-primary  text-uppercase">Xem-->
-<!--                    chi tiết</a>-->
-                  <a routerLink="/cart"  class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
+                  <!--                  <a [routerLink]="['/detail',bookSlide[2].bookId]" class="btn btn-primary  text-uppercase">Xem-->
+                  <!--                    chi tiết</a>-->
+                  <a routerLink="/cart" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
                 </div>
               </div>
             </div>
@@ -349,7 +349,7 @@
           <div class="tab-pane fade show active" id="tab-jewelry">
             <div class="row">
               <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px"
-                   *ngFor="let book of bookList | paginate: {itemsPerPage: size, currentPage: page, totalItems: totalItems}">
+                   *ngFor="let book of bookBestSell | paginate: {itemsPerPage: size, currentPage: page, totalItems: totalItems}">
                 <!-- Single Prodect -->
                 <div class="product">
                   <div class="thumb">
@@ -362,7 +362,9 @@
                            alt="Product"/>
                     </a>
                     <span class="badges">
-                      <span class="sale" *ngIf="book.bookPromotionId.promotionPercent > 0">- {{book.bookPromotionId.promotionPercent}}%</span>
+                      <span class="sale"
+                            *ngIf="book.bookPromotionId.promotionPercent > 0">- {{book.bookPromotionId.promotionPercent}}
+                        %</span>
                       <span *ngIf="book.bookQuantity>0" class="new">Mới</span>
                       <span *ngIf="book.bookQuantity <=0" class="new">Hết</span>
                                             </span>
@@ -372,10 +374,13 @@
                       <a (click)="getBookDetail(book)" class="action quickview" data-link-action="quickview"
                          title="Chi tiết" data-bs-toggle="modal"
                          data-bs-target="#exampleModal"><i class="pe-7s-look"></i></a>
-                      <a *ngIf="isLoggedIn && showAdminBoard"  [routerLink]="['/edit',book.bookId]" class="action quickview" data-link-action="quickview"
+                      <a *ngIf="isLoggedIn && showAdminBoard" [routerLink]="['/edit',book.bookId]"
+                         class="action quickview" data-link-action="quickview"
                          title="Chỉnh sửa"><i class="pe-7s-pen"></i></a>
-                      <a (click)="delete(book)" *ngIf="isLoggedIn && showAdminBoard" class="action quickview" data-link-action="quickview"
-                        data-bs-toggle="modal" data-bs-target="#delete" title="Xóa"><i class="fa-regular fa-trash-can"></i></a>
+                      <a (click)="delete(book)" *ngIf="isLoggedIn && showAdminBoard" class="action quickview"
+                         data-link-action="quickview"
+                         data-bs-toggle="modal" data-bs-target="#delete" title="Xóa"><i
+                        class="fa-regular fa-trash-can"></i></a>
                     </div>
                   </div>
                   <div class="content">
@@ -389,7 +394,8 @@
                     </a>
                     </h5>
                     <span class="price">
-                                                <span class="new">{{book.bookPrice - book.bookPrice*book.bookPromotionId.promotionPercent/100 | currency :'VND'}}</span>
+                                                <span
+                                                  class="new">{{book.bookPrice - book.bookPrice * book.bookPromotionId.promotionPercent / 100 | currency :'VND'}}</span>
                                             </span>
                   </div>
                   <button routerLink="/cart" title="Add To Cart" class=" add-to-cart">THÊM VÀO GIỎ
@@ -405,288 +411,292 @@
         </div>
       </div>
     </div>
-    <div *ngIf="totalItems > 8 && title == 'Tất cả sách'" style="display: flex; justify-content: center; align-items: center">
-      <pagination-controls nextLabel=">" previousLabel="<" (pageChange)="getBookList($event)"></pagination-controls>
+    <div *ngIf="totalItems > 8 " style="display: flex; justify-content: center; align-items: center">
+      <pagination-controls nextLabel=">" previousLabel="<"
+                           (pageChange)="getBookBestSellList($event)"></pagination-controls>
     </div>
-    <div *ngIf="totalItems > 8 && title !== 'Tất cả sách'" style="display: flex; justify-content: center; align-items: center">
-      <pagination-controls nextLabel=">" previousLabel="<"   (pageChange)="getBookByCategory(category,$event)"></pagination-controls>
-    </div>
+  </div>
+</div>
 
-    <!-- Product Area End -->
+<!-- Product Area End -->
 
-    <!-- Feature Area Srart -->
-    <div class="feature-area pt-100px">
-      <div class="container">
-        <div class="feature-wrapper">
-          <div class="single-feture-col">
-            <!-- single item -->
-            <div class="single-feature">
-              <div class="feature-icon">
-                <img src="assets/images/icons/1.png" alt="">
-              </div>
-              <div class="feature-content">
-                <h4 class="title">Miễn phí giao hàng</h4>
-                <span class="sub-title">Giới hạn ở mức $ 39 cho mỗi đơn đặt hàng</span>
-              </div>
-            </div>
+<!-- Feature Area Srart -->
+<div class="feature-area pt-100px">
+  <div class="container">
+    <div class="feature-wrapper">
+      <div class="single-feture-col">
+        <!-- single item -->
+        <div class="single-feature">
+          <div class="feature-icon">
+            <img src="assets/images/icons/1.png" alt="">
           </div>
-          <!-- single item -->
-          <div class="single-feture-col ">
-            <div class="single-feature">
-              <div class="feature-icon">
-                <img src="assets/images/icons/2.png" alt="">
-              </div>
-              <div class="feature-content">
-                <h4 class="title">Thanh toán bằng thẻ</h4>
-                <span class="sub-title">Trả góp 12 tháng</span>
-              </div>
-            </div>
-          </div>
-          <!-- single item -->
-          <div class="single-feture-col">
-            <div class="single-feature">
-              <div class="feature-icon">
-                <img src="assets/images/icons/3.png" alt="">
-              </div>
-              <div class="feature-content">
-                <h4 class="title">Trả hàng dễ dàng</h4>
-                <span class="sub-title">Tự tin mua sắm</span>
-              </div>
-            </div>
-            <!-- single item -->
+          <div class="feature-content">
+            <h4 class="title">Miễn phí giao hàng</h4>
+            <span class="sub-title">Giới hạn ở mức $ 39 cho mỗi đơn đặt hàng</span>
           </div>
         </div>
       </div>
+      <!-- single item -->
+      <div class="single-feture-col ">
+        <div class="single-feature">
+          <div class="feature-icon">
+            <img src="assets/images/icons/2.png" alt="">
+          </div>
+          <div class="feature-content">
+            <h4 class="title">Thanh toán bằng thẻ</h4>
+            <span class="sub-title">Trả góp 12 tháng</span>
+          </div>
+        </div>
+      </div>
+      <!-- single item -->
+      <div class="single-feture-col">
+        <div class="single-feature">
+          <div class="feature-icon">
+            <img src="assets/images/icons/3.png" alt="">
+          </div>
+          <div class="feature-content">
+            <h4 class="title">Trả hàng dễ dàng</h4>
+            <span class="sub-title">Tự tin mua sắm</span>
+          </div>
+        </div>
+        <!-- single item -->
+      </div>
     </div>
-    <!-- Feature Area End -->
+  </div>
+</div>
+<!-- Feature Area End -->
 
 
-    <!-- Deal Area Start -->
-    <div class="deal-area pb-100px pt-100px">
-      <div class="container ">
-        <div class="row">
-          <div class="col-12">
-            <div class="deal-inner deal-bg position-relative ptb-80px"
-                 data-bg-image="assets/images/deal-img/deal-bg.jpg">
-              <div class="deal-wrapper">
-                <h3 class="title">{{bookBestSale[0].bookName}} <br>
-                  <span style="font-size: 25px">Giảm giá</span><span class="new" style="font-style: italic">  - {{bookBestSale[0].bookPromotionId.promotionPercent}}% </span></h3>
-                <span class="price">
+<!-- Deal Area Start -->
+<div class="deal-area pb-100px pt-100px">
+  <div class="container ">
+    <div class="row">
+      <div class="col-12">
+        <div class="deal-inner deal-bg position-relative ptb-80px"
+             data-bg-image="assets/images/deal-img/deal-bg.jpg">
+          <div class="deal-wrapper">
+            <h3 class="title">{{bookBestSale[0].bookName}} <br>
+              <span style="font-size: 25px">Giảm giá</span><span class="new"
+                                                                 style="font-style: italic">  - {{bookBestSale[0].bookPromotionId.promotionPercent}}
+                % </span></h3>
+            <span class="price">
                                 <span class="old"> <del>{{bookBestSale[0].bookPrice | currency :'VND'}}</del></span>
-                                <span class="new"> - {{bookBestSale[0].bookPrice - bookBestSale[0].bookPrice*bookBestSale[0].bookPromotionId.promotionPercent/100 | currency :'VND'}}</span>
+                                <span
+                                  class="new"> - {{bookBestSale[0].bookPrice - bookBestSale[0].bookPrice * bookBestSale[0].bookPromotionId.promotionPercent / 100 | currency :'VND'}}</span>
                             </span>
-                <a routerLink="/cart"  class="btn btn-lg btn-primary">Thêm vào giỏ</a>
-              </div>
-              <div class="deal-image d-flex justify-content-end">
-                <img [routerLink]="['/detail',bookBestSale[0].bookId]" class="img-fluid " style="border-radius: 10px; margin-right: 20px; margin-top: 20px" width="56%"  [src]="bookBestSale[0].bookImage" alt="">
-<!--                [src]="bookBestSale[0].bookImage"-->
-                <div class="discount">
-                  <h3>{{bookBestSale[0].bookPromotionId.promotionPercent}}%</h3>
-                </div>
-              </div>
+            <a routerLink="/cart" class="btn btn-lg btn-primary">Thêm vào giỏ</a>
+          </div>
+          <div class="deal-image d-flex justify-content-end">
+            <img [routerLink]="['/detail',bookBestSale[0].bookId]" class="img-fluid "
+                 style="border-radius: 10px; margin-right: 20px; margin-top: 20px" width="56%"
+                 [src]="bookBestSale[0].bookImage" alt="">
+            <!--                [src]="bookBestSale[0].bookImage"-->
+            <div class="discount">
+              <h3>{{bookBestSale[0].bookPromotionId.promotionPercent}}%</h3>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- Deal Area End -->
+  </div>
+</div>
+<!-- Deal Area End -->
 
-    <!-- Product Area Start -->
-    <!-- Product Area End -->
+<!-- Product Area Start -->
+<!-- Product Area End -->
 
-    <!-- Testimonial Area Start -->
-    <div class="banner-area-2">
-      <div class="container">
-        <div class="row m-0">
-          <div class="col-md-6 p-0">
-            <div [routerLink]="['/detail',bookBestSale[1].bookId]" class="single-banner nth-child-1">
-              <img  style="object-fit: cover" width="550px" height="550px" [src]="bookBestSale[1].bookImage" alt="">
-<!--              <img src="assets/images/banner/4.jpg" alt="">-->
-              <div class="banner-content nth-child-1">
-                <span class="category">Bán chạy</span>
-                <span class="title">{{bookBestSale[1].bookName}} <br>
+<!-- Testimonial Area Start -->
+<div class="banner-area-2">
+  <div class="container">
+    <div class="row m-0">
+      <div class="col-md-6 p-0">
+        <div [routerLink]="['/detail',bookBestSale[1].bookId]" class="single-banner nth-child-1">
+          <img style="object-fit: cover" width="550px" height="550px" [src]="bookBestSale[1].bookImage" alt="">
+          <!--              <img src="assets/images/banner/4.jpg" alt="">-->
+          <div class="banner-content nth-child-1">
+            <span class="category">Bán chạy</span>
+            <span class="title">{{bookBestSale[1].bookName}} <br>
                                 </span>
-                <a routerLink="/cart"   class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
-              </div>
-            </div>
+            <a routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
           </div>
-          <div class="col-md-6 p-0 ">
-            <div class="single-banner nth-child-2 mb-lm-30px mt-lm-30px">
-              <img [routerLink]="['/detail',bookBestSale[2].bookId]" style="object-fit: cover" width="550px" height="275px" [src]="bookBestSale[2].bookImage" alt="">
-              <div class="banner-content nth-child-2 pt-5">
-                <span class="category" >Bán chạy </span>
-                <span class="title">{{bookBestSale[2].bookName}} <br>
+        </div>
+      </div>
+      <div class="col-md-6 p-0 ">
+        <div class="single-banner nth-child-2 mb-lm-30px mt-lm-30px">
+          <img [routerLink]="['/detail',bookBestSale[2].bookId]" style="object-fit: cover" width="550px" height="275px"
+               [src]="bookBestSale[2].bookImage" alt="">
+          <div class="banner-content nth-child-2 pt-5">
+            <span class="category">Bán chạy </span>
+            <span class="title">{{bookBestSale[2].bookName}} <br>
                               - {{bookBestSale[2].bookPromotionId.promotionPercent}}%</span>
-                <a routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
-              </div>
-            </div>
-            <div [routerLink]="['/detail',bookBestSale[3].bookId]" class="single-banner nth-child-3">
-              <img  style="object-fit:cover" width="550px" height="275px" [src]="bookBestSale[3].bookImage" alt="">
-              <div class="banner-content nth-child-3">
-                <span class="category" style="color: white">Bán chạy</span>
-                <span class="title" style="color: white">{{bookBestSale[3].bookName}} <br>
+            <a routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
+          </div>
+        </div>
+        <div [routerLink]="['/detail',bookBestSale[3].bookId]" class="single-banner nth-child-3">
+          <img style="object-fit:cover" width="550px" height="275px" [src]="bookBestSale[3].bookImage" alt="">
+          <div class="banner-content nth-child-3">
+            <span class="category" style="color: white">Bán chạy</span>
+            <span class="title" style="color: white">{{bookBestSale[3].bookName}} <br>
                                 - {{bookBestSale[3].bookPromotionId.promotionPercent}}%</span>
-                <a routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
-              </div>
-            </div>
+            <a routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
           </div>
         </div>
       </div>
     </div>
-    <!-- Testimonial Area End -->
+  </div>
+</div>
+<!-- Testimonial Area End -->
 
 
-    <!--  Blog area Start -->
-    <div class="pb-70px pt-70px"></div>
-    <!--  Blog area End -->
+<!--  Blog area Start -->
+<div class="pb-70px pt-70px"></div>
+<!--  Blog area End -->
 
 
-    <!-- Footer Area Start -->
+<!-- Footer Area Start -->
 
-    <!-- Footer Area End -->
+<!-- Footer Area End -->
 
-    <!-- Search Modal Start -->
-    <div class="modal popup-search-style" id="searchActive">
-      <button type="button" class="close-btn" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-      <div class="modal-overlay">
-        <div class="modal-dialog p-0" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <h2>Tìm tên sản phẩm</h2>
-<!--              <form class="navbar-form position-relative" role="search">-->
-              <div class="navbar-form position-relative" role="search">
-                <div class="form-group">
-                  <input type="text" #name class="form-control" placeholder="Tìm ở đây...">
-                </div>
-<!--                <button type="submit" (click)="searchBookByName(name.value,page)" class="submit-btn"><i class="pe-7s-search"></i></button>-->
-              </div>
+<!-- Search Modal Start -->
+<div class="modal popup-search-style" id="searchActive">
+  <button type="button" class="close-btn" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+  <div class="modal-overlay">
+    <div class="modal-dialog p-0" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h2>Tìm tên sản phẩm</h2>
+          <!--              <form class="navbar-form position-relative" role="search">-->
+          <div class="navbar-form position-relative" role="search">
+            <div class="form-group">
+              <input type="text" #name class="form-control" placeholder="Tìm ở đây...">
             </div>
+            <!--                <button type="submit" (click)="searchBookByName(name.value,page)" class="submit-btn"><i class="pe-7s-search"></i></button>-->
           </div>
         </div>
       </div>
     </div>
-    <!-- Search Modal End -->
+  </div>
+</div>
+<!-- Search Modal End -->
 
 
-    <!-- Modal detail -->
-    <div class="modal modal-2 fade" id="exampleModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-lg-6 col-sm-12 col-xs-12 mb-lm-30px mb-md-30px mb-sm-30px">
-                <!-- Swiper -->
-                <div class="swiper-container gallery-top">
-                  <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                      <img class="img-responsive m-auto"
-                           [src]="bookDetail.bookImage" alt="">
-                    </div>
-                  </div>
+<!-- Modal detail -->
+<div class="modal modal-2 fade" id="exampleModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-6 col-sm-12 col-xs-12 mb-lm-30px mb-md-30px mb-sm-30px">
+            <!-- Swiper -->
+            <div class="swiper-container gallery-top">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img class="img-responsive m-auto"
+                       [src]="bookDetail.bookImage" alt="">
                 </div>
-                <!--                <div class="swiper-container gallery-thumbs mt-20px">-->
-                <!--                  <div class="swiper-wrapper">-->
-                <!--                    <div class="swiper-slide">-->
-                <!--                      <img class="img-responsive m-auto"-->
-                <!--                           [src]="bookDetail.bookImage" alt="">-->
-                <!--                    </div>-->
-                <!--                  </div>-->
-                <!--                </div>-->
               </div>
-              <div class="col-lg-6 col-sm-12 col-xs-12" data-aos="fade-up" data-aos-delay="200">
-                <div class="product-details-content quickview-content">
-                  <h2>{{bookDetail.bookName}}</h2>
-                  <div class="pricing-meta">
-                    <ul class="d-flex">
-                      <li
-                        class="new-price"> {{bookDetail.bookPrice - bookDetail.bookPrice * bookDetail.bookPromotionId.promotionPercent / 100 | currency:'VND'}}</li>
-                      <li class="old-price" *ngIf="bookDetail.bookPromotionId.promotionPercent > 0">
-                        <del>{{bookDetail.bookPrice | currency : 'VND'}}</del>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="pro-details-rating-wrap">
-                    <div class="rating-product">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                    </div>
-                    <span class="read-review"><a class="reviews" href="#">( 2 Review )</a></span>
-                  </div>
-                  <div class="stock mt-30px">
+            </div>
+            <!--                <div class="swiper-container gallery-thumbs mt-20px">-->
+            <!--                  <div class="swiper-wrapper">-->
+            <!--                    <div class="swiper-slide">-->
+            <!--                      <img class="img-responsive m-auto"-->
+            <!--                           [src]="bookDetail.bookImage" alt="">-->
+            <!--                    </div>-->
+            <!--                  </div>-->
+            <!--                </div>-->
+          </div>
+          <div class="col-lg-6 col-sm-12 col-xs-12" data-aos="fade-up" data-aos-delay="200">
+            <div class="product-details-content quickview-content">
+              <h2>{{bookDetail.bookName}}</h2>
+              <div class="pricing-meta">
+                <ul class="d-flex">
+                  <li
+                    class="new-price"> {{bookDetail.bookPrice - bookDetail.bookPrice * bookDetail.bookPromotionId.promotionPercent / 100 | currency:'VND'}}</li>
+                  <li class="old-price" *ngIf="bookDetail.bookPromotionId.promotionPercent > 0">
+                    <del>{{bookDetail.bookPrice | currency : 'VND'}}</del>
+                  </li>
+                </ul>
+              </div>
+              <div class="pro-details-rating-wrap">
+                <div class="rating-product">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                </div>
+                <span class="read-review"><a class="reviews" href="#">( 2 Review )</a></span>
+              </div>
+              <div class="stock mt-30px">
                     <span class="avallabillty" *ngIf="bookDetail.bookQuantity">Tình trạng: <span class="in-stock"><i
                       class="fa fa-check"></i>Trong kho</span></span>
-                    <span class="avallabillty" *ngIf="bookDetail.bookQuantity <= 0">Tình trạng: <span
-                      class="in-stock"><i
-                      class="fa fa-check"></i>Hết hàng</span></span>
-                  </div>
-                  <p class="mt-20px mb-0">
-                    Mã sản phẩm: <span>{{bookDetail.bookCode}}</span>
-                  </p>
-                  <p class="mt-lg-1 mb-0">
-                    Tác giả: <span>{{bookDetail.bookAuthorId.authorName}}</span>
-                  </p>
-                  <p class="mt-lg-1 mb-0">
-                    Dịch giả: <span>{{bookDetail.bookTranslator}}</span>
-                  </p>
-                  <p class="mt-lg-1 mb-0">
-                    Nhà sản xuất: <span>{{bookDetail.bookPublisher}}</span>
-                  </p>
-                  <p class="mt-lg-1 mb-0">
-                    Số trang: <span>{{bookDetail.bookTotalPage}}</span>
-                  </p>
-                  <p class="mt-lg-1 mb-0">
-                    Kích thước: <span>{{bookDetail.bookSize}}</span>
-                  </p>
-                  <p class="mt-lg-1 mb-0">
-                    Ngày phát hành: <span>{{bookDetail.bookPublishDate | date : 'dd-MM-yyyy'}}</span>
-                  </p>
-                  <div class="pro-details-quality">
-                    <div class="cart-plus-minus">
-                      <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1"/>
-                    </div>
-                    <div routerLink="/cart" class="pro-details-cart">
-                      <button class="add-cart"> THÊM VÀO GIỎ
-                      </button>
-                    </div>
-                    <div class="pro-details-compare-wishlist pro-details-wishlist ">
-                      <a><i class="pe-7s-like"></i></a>
-                    </div>
-                  </div>
-                  <div class="pro-details-categories-info pro-details-same-style d-flex">
-                    <span>Danh mục: </span>
-                    <ul class="d-flex">
-                      <li>
-                        <a href="#">{{bookDetail.bookCategoryId.categoryName}} </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="pro-details-social-info pro-details-same-style d-flex">
-                    <span>Chia sẻ: </span>
-                    <ul class="d-flex">
-                      <li>
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                      </li>
-                      <li>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                      </li>
-                      <li>
-                        <a href="#"><i class="fa fa-google"></i></a>
-                      </li>
-                      <li>
-                        <a href="#"><i class="fa fa-youtube"></i></a>
-                      </li>
-                      <li>
-                        <a href="#"><i class="fa fa-instagram"></i></a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="payment-img">
-                    <a href="#"><img src="assets/images//icons/payment.png" alt=""></a>
-                  </div>
+                <span class="avallabillty" *ngIf="bookDetail.bookQuantity <= 0">Tình trạng: <span
+                  class="in-stock"><i
+                  class="fa fa-check"></i>Hết hàng</span></span>
+              </div>
+              <p class="mt-20px mb-0">
+                Mã sản phẩm: <span>{{bookDetail.bookCode}}</span>
+              </p>
+              <p class="mt-lg-1 mb-0">
+                Tác giả: <span>{{bookDetail.bookAuthorId.authorName}}</span>
+              </p>
+              <p class="mt-lg-1 mb-0">
+                Dịch giả: <span>{{bookDetail.bookTranslator}}</span>
+              </p>
+              <p class="mt-lg-1 mb-0">
+                Nhà sản xuất: <span>{{bookDetail.bookPublisher}}</span>
+              </p>
+              <p class="mt-lg-1 mb-0">
+                Số trang: <span>{{bookDetail.bookTotalPage}}</span>
+              </p>
+              <p class="mt-lg-1 mb-0">
+                Kích thước: <span>{{bookDetail.bookSize}}</span>
+              </p>
+              <p class="mt-lg-1 mb-0">
+                Ngày phát hành: <span>{{bookDetail.bookPublishDate | date : 'dd-MM-yyyy'}}</span>
+              </p>
+              <div class="pro-details-quality">
+                <div class="cart-plus-minus">
+                  <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1"/>
                 </div>
+                <div routerLink="/cart" class="pro-details-cart">
+                  <button class="add-cart"> THÊM VÀO GIỎ
+                  </button>
+                </div>
+                <div class="pro-details-compare-wishlist pro-details-wishlist ">
+                  <a><i class="pe-7s-like"></i></a>
+                </div>
+              </div>
+              <div class="pro-details-categories-info pro-details-same-style d-flex">
+                <span>Danh mục: </span>
+                <ul class="d-flex">
+                  <li>
+                    <a href="#">{{bookDetail.bookCategoryId.categoryName}} </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="pro-details-social-info pro-details-same-style d-flex">
+                <span>Chia sẻ: </span>
+                <ul class="d-flex">
+                  <li>
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fa fa-google"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fa fa-youtube"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fa fa-instagram"></i></a>
+                  </li>
+                </ul>
+              </div>
+              <div class="payment-img">
+                <a href="#"><img src="assets/images//icons/payment.png" alt=""></a>
               </div>
             </div>
           </div>

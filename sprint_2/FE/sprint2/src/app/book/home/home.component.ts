@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
 import {IBook} from '../../model/book/IBook';
 import {BookService} from '../../service/book/book.service';
 import {Router} from '@angular/router';
 import {CategoryService} from '../../service/book/category.service';
 import {ICategory} from '../../model/book/ICategory';
+import {TokenStorageService} from '../../service/security/token-storage.service';
+import {SecurityServiceService} from '../../service/security/security.service';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -41,27 +43,47 @@ export class HomeComponent implements OnInit {
 
   title = 'Tất cả sách';
 
-  nameSearch = '';
-
   bookBestSale: IBook[] = [{
     bookCategoryId: {},
     bookPromotionId: {},
     bookAuthorId: {}
   }];
 
+  private roles: string[];
+  isLoggedIn = false;
+  showAdminBoard = false;
+  showUser = false;
+  userName: string;
+
+  scrollTop = 0;
+
   constructor(private bookService: BookService,
               private categoryService: CategoryService,
               private router: Router,
+              private tokenStorageService: TokenStorageService,
+              private securityService: SecurityServiceService,
   ) {
   }
 
   ngOnInit(): void {
     this.top();
     this.getBookSlide();
-    // this.getBookList(this.page - 1);
-    this.searchBookByName(this.nameSearch, 1);
+    this.getBookList(this.page - 1);
+    // this.searchBookByName(this.nameSearch, 1);
     this.getAllCategory();
     this.getBestSale();
+
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    if (this.isLoggedIn) {
+      this.userName = this.tokenStorageService.getUser().account.username;
+      this.roles = this.tokenStorageService.getUser().account.roles[0].roleName;
+      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showUser = this.roles.includes('ROLE_USER');
+      // this.showAccountantBoard = this.roles.includes('ROLE_ACCOUNTANT');
+      // this.showSellBoard = this.roles.includes('ROLE_SELL');
+
+      console.log('roles: ' + this.roles);
+    }
   }
 
   top() {
@@ -71,7 +93,7 @@ export class HomeComponent implements OnInit {
 
   topCategory() {
     document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 620;
+    document.documentElement.scrollTop = 641;
   }
 
   getBookSlide() {
@@ -83,12 +105,22 @@ export class HomeComponent implements OnInit {
   }
 
   getBookList(page: number) {
+    if (this.scrollTop === 0) {
+      this.top();
+      this.scrollTop++;
+    } else {
+      this.topCategory();
+    }
     this.page = page;
     this.bookService.getBookList(this.page - 1).subscribe(
       (data: any) => {
         this.bookList = data.content;
         this.size = data.size;
         this.totalItems = data.totalElements;
+      },
+      () => {
+      },
+      () => {
       }
     );
   }
@@ -116,7 +148,8 @@ export class HomeComponent implements OnInit {
         this.size = data.size;
         this.totalItems = data.totalElements;
       },
-      () => {},
+      () => {
+      },
       () => {
         this.topCategory();
       }
@@ -131,17 +164,25 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  searchBookByName(name: string, page: number) {
-    this.page = page;
-    this.nameSearch = name;
-    console.log(name);
-    this.bookService.getBookByName(name, this.page - 1).subscribe(
-      (data: any) => {
-        this.bookList = data.content;
-        this.size = data.size;
-        this.totalItems = data.totalElements;
-      }
-    );
-  }
+  // searchBookByName(name: string, page: number) {
+  //   this.page = page;
+  //   this.nameSearch = name;
+  //   console.log(name);
+  //   this.bookService.getBookByName(name, this.page - 1).subscribe(
+  //     (data: any) => {
+  //       this.bookList = data.content;
+  //       this.size = data.size;
+  //       this.totalItems = data.totalElements;
+  //     }
+  //   );
+  // }
+  // changeColor() {
+  //   (document.querySelector('.pagination-previous') as HTMLElement).style.color = 'blue';
+  //   (document.querySelector('.pagination-next') as HTMLElement).style.color = 'black';
+  // }
+  delete(book: IBook) {
 
+  }
 }
+
+

@@ -4,6 +4,7 @@ import {CategoryService} from '../../service/book/category.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IBook} from '../../model/book/IBook';
 import {ICategory} from '../../model/book/ICategory';
+import {TokenStorageService} from '../../service/security/token-storage.service';
 
 @Component({
   selector: 'app-list-category',
@@ -51,10 +52,19 @@ export class ListCategoryComponent implements OnInit {
     bookAuthorId: {}
   }];
 
+  private roles: string[];
+  isLoggedIn = false;
+  showAdminBoard = false;
+  showUser = false;
+  showAccountantBoard = false;
+  showSellBoard = false;
+  userName: string;
+
   constructor(private bookService: BookService,
               private categoryService: CategoryService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private tokenStorageService: TokenStorageService,) {
   }
 
   ngOnInit(): void {
@@ -67,6 +77,18 @@ export class ListCategoryComponent implements OnInit {
       this.getAllCategory();
       this.getBestSale();
     });
+
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    if (this.isLoggedIn) {
+      this.userName = this.tokenStorageService.getUser().account.username;
+      this.roles = this.tokenStorageService.getUser().account.roles[0].roleName;
+      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showUser = this.roles.includes('ROLE_USER');
+      // this.showAccountantBoard = this.roles.includes('ROLE_ACCOUNTANT');
+      // this.showSellBoard = this.roles.includes('ROLE_SELL');
+
+      console.log('roles: ' + this.roles);
+    }
   }
 
   top() {
@@ -76,7 +98,7 @@ export class ListCategoryComponent implements OnInit {
 
   topCategory() {
     document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 620;
+    document.documentElement.scrollTop = 641;
   }
 
   getBookSlide() {
@@ -94,6 +116,10 @@ export class ListCategoryComponent implements OnInit {
         this.bookList = data.content;
         this.size = data.size;
         this.totalItems = data.totalElements;
+      },
+      () => {},
+      () => {
+        this.topCategory();
       }
     );
   }

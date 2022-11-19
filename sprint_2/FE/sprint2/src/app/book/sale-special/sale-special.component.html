@@ -221,7 +221,7 @@
                 <div class="row d-flex justify-content-center button__slide">
                   <!--                  <a [routerLink]="['/detail',bookSlide[0].bookId]" class="btn btn-primary  text-uppercase">Xem-->
                   <!--                    chi tiết</a>-->
-                  <a routerLink="" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
+                  <a routerLink="/cart" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
                 </div>
               </div>
             </div>
@@ -254,7 +254,7 @@
                 <div class="row d-flex justify-content-center button__slide">
                   <!--                  <a  class="btn btn-primary  text-uppercase">Xem-->
                   <!--                    chi tiết</a>-->
-                  <a routerLink="" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
+                  <a routerLink="/cart" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
                 </div>
               </div>
             </div>
@@ -289,7 +289,7 @@
                 <div class="row d-flex justify-content-center button__slide">
                   <!--                  <a [routerLink]="['/detail',bookSlide[2].bookId]" class="btn btn-primary  text-uppercase">Xem-->
                   <!--                    chi tiết</a>-->
-                  <a routerLink="" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
+                  <a routerLink="/cart" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
                 </div>
               </div>
             </div>
@@ -372,8 +372,9 @@
                       <a (click)="getBookDetail(book)" class="action quickview" data-link-action="quickview"
                          title="Chi tiết" data-bs-toggle="modal"
                          data-bs-target="#exampleModal"><i class="pe-7s-look"></i></a>
-                      <a class="action compare" title="Compare"><i
-                        class="pe-7s-refresh-2"></i></a>
+                      <a *ngIf="isLoggedIn && showAdminBoard"  [routerLink]="['/edit',book.bookId]" class="action quickview" data-link-action="quickview"
+                         title="Chỉnh sửa"><i class="pe-7s-pen"></i></a>
+                      <a *ngIf="isLoggedIn && showAdminBoard" class="action quickview" title="Xóa"><i class="fa-regular fa-trash-can"></i></a>
                     </div>
                   </div>
                   <div class="content">
@@ -390,7 +391,7 @@
                                                 <span class="new">{{book.bookPrice - book.bookPrice*book.bookPromotionId.promotionPercent/100 | currency :'VND'}}</span>
                                             </span>
                   </div>
-                  <button title="Add To Cart" class=" add-to-cart">THÊM VÀO GIỎ
+                  <button routerLink="/cart" title="Add To Cart" class=" add-to-cart">THÊM VÀO GIỎ
                   </button>
                 </div>
               </div>
@@ -407,7 +408,7 @@
 <!--      <pagination-controls (pageChange)="getBookList($event)"></pagination-controls>-->
 <!--    </div>-->
     <div *ngIf="totalItems > 8 " style="display: flex; justify-content: center; align-items: center">
-      <pagination-controls (pageChange)="getBookSaleSpecial($event)"></pagination-controls>
+      <pagination-controls nextLabel=">" previousLabel="<" (pageChange)="getBookSaleSpecial($event)"></pagination-controls>
     </div>
     <!-- Product Area End -->
 
@@ -472,7 +473,7 @@
                                 <span class="old"> <del>{{bookBestSale[0].bookPrice | currency :'VND'}}</del></span>
                                 <span class="new"> - {{bookBestSale[0].bookPrice - bookBestSale[0].bookPrice*bookBestSale[0].bookPromotionId.promotionPercent/100 | currency :'VND'}}</span>
                             </span>
-                <a href="single-product-variable.html" class="btn btn-lg btn-primary">Thêm vào giỏ</a>
+                <a routerLink="/cart" class="btn btn-lg btn-primary">Thêm vào giỏ</a>
               </div>
               <div class="deal-image d-flex justify-content-end">
                 <img [routerLink]="['/detail',bookBestSale[0].bookId]" class="img-fluid " style="border-radius: 10px; margin-right: 20px; margin-top: 20px" width="56%"  [src]="bookBestSale[0].bookImage" alt="">
@@ -503,7 +504,7 @@
                 <span class="category">Bán chạy</span>
                 <span class="title">{{bookBestSale[1].bookName}} <br>
                                 </span>
-                <a href="shop-left-sidebar.html" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
+                <a routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
               </div>
             </div>
           </div>
@@ -514,7 +515,7 @@
                 <span class="category" >Bán chạy </span>
                 <span class="title">{{bookBestSale[2].bookName}} <br>
                               - {{bookBestSale[2].bookPromotionId.promotionPercent}}%</span>
-                <a href="shop-left-sidebar.html" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
+                <a routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
               </div>
             </div>
             <div [routerLink]="['/detail',bookBestSale[3].bookId]" class="single-banner nth-child-3">
@@ -523,7 +524,7 @@
                 <span class="category" style="color: white">Bán chạy</span>
                 <span class="title" style="color: white">{{bookBestSale[3].bookName}} <br>
                                 - {{bookBestSale[3].bookPromotionId.promotionPercent}}%</span>
-                <a href="shop-left-sidebar.html" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
+                <a routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
               </div>
             </div>
           </div>
@@ -644,7 +645,7 @@
                       <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1"/>
                     </div>
                     <div class="pro-details-cart">
-                      <button class="add-cart"> THÊM VÀO GIỎ
+                      <button routerLink="/cart" class="add-cart"> THÊM VÀO GIỎ
                       </button>
                     </div>
                     <div class="pro-details-compare-wishlist pro-details-wishlist ">

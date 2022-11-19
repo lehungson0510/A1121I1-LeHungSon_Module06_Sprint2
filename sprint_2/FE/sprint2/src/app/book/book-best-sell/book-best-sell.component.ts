@@ -3,18 +3,16 @@ import {IBook} from '../../model/book/IBook';
 import {ICategory} from '../../model/book/ICategory';
 import {BookService} from '../../service/book/book.service';
 import {CategoryService} from '../../service/book/category.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {TokenStorageService} from '../../service/security/token-storage.service';
+import {SecurityServiceService} from '../../service/security/security.service';
 
 @Component({
-  selector: 'app-sale-special',
-  templateUrl: './sale-special.component.html',
-  styleUrls: ['./sale-special.component.css']
+  selector: 'app-book-best-sell',
+  templateUrl: './book-best-sell.component.html',
+  styleUrls: ['./book-best-sell.component.css']
 })
-export class SaleSpecialComponent implements OnInit {
-
-  idCategory: number;
-
+export class BookBestSellComponent implements OnInit {
   bookSlide: IBook[] = [{
     bookCategoryId: {},
     bookPromotionId: {},
@@ -32,7 +30,7 @@ export class SaleSpecialComponent implements OnInit {
   size: number;
   totalItems: number;
 
-  bookList: IBook[] = [{
+  bookBestSell: IBook[] = [{
     bookCategoryId: {},
     bookPromotionId: {},
     bookAuthorId: {}
@@ -43,7 +41,7 @@ export class SaleSpecialComponent implements OnInit {
 
   category: ICategory;
 
-  title = 'Các sách được giảm giá';
+  title = 'Sách bán chạy';
 
   nameSearch = '';
 
@@ -57,22 +55,23 @@ export class SaleSpecialComponent implements OnInit {
   isLoggedIn = false;
   showAdminBoard = false;
   showUser = false;
-  showAccountantBoard = false;
-  showSellBoard = false;
   userName: string;
 
   constructor(private bookService: BookService,
               private categoryService: CategoryService,
               private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService,
+              private securityService: SecurityServiceService,
+  ) {
   }
 
   ngOnInit(): void {
-      this.getBookSaleSpecial(1);
-      this.getAllCategory();
-      this.getBestSale();
-      this.getBookSlide();
+    this.topCategory();
+    this.getBookSlide();
+    this.getBookBestSellList(this.page - 1);
+    // this.searchBookByName(this.nameSearch, 1);
+    this.getAllCategory();
+    this.getBestSale();
 
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
@@ -105,15 +104,15 @@ export class SaleSpecialComponent implements OnInit {
     );
   }
 
-  getBookList(page: number) {
+  getBookBestSellList(page: number) {
     this.page = page;
-    this.bookService.getBookList(this.page - 1).subscribe(
+    this.bookService.getBestSeller(this.page - 1).subscribe(
       (data: any) => {
-        this.bookList = data.content;
+        this.bookBestSell = data.content;
         this.size = data.size;
         this.totalItems = data.totalElements;
-      }
-    );
+        this.topCategory();
+      });
   }
 
   getBookDetail(bookDetail: IBook) {
@@ -129,11 +128,13 @@ export class SaleSpecialComponent implements OnInit {
     );
   }
 
-  getBookByCategory(page: number) {
+  getBookByCategory(category: ICategory, page: number) {
+    this.title = category.categoryName;
+    this.category = category;
     this.page = page;
-    this.bookService.getBookByCategory(this.idCategory, this.page - 1).subscribe(
+    this.bookService.getBookByCategory(category.categoryId, this.page - 1).subscribe(
       (data: any) => {
-        this.bookList = data.content;
+        this.bookBestSell = data.content;
         this.size = data.size;
         this.totalItems = data.totalElements;
       },
@@ -153,32 +154,24 @@ export class SaleSpecialComponent implements OnInit {
     );
   }
 
-  searchBookByName(name: string, page: number) {
-    this.page = page;
-    this.nameSearch = name;
-    console.log(name);
-    this.bookService.getBookByName(name, this.page - 1).subscribe(
-      (data: any) => {
-        this.bookList = data.content;
-        this.size = data.size;
-        this.totalItems = data.totalElements;
-      }
-    );
+  // searchBookByName(name: string, page: number) {
+  //   this.page = page;
+  //   this.nameSearch = name;
+  //   console.log(name);
+  //   this.bookService.getBookByName(name, this.page - 1).subscribe(
+  //     (data: any) => {
+  //       this.bookList = data.content;
+  //       this.size = data.size;
+  //       this.totalItems = data.totalElements;
+  //     }
+  //   );
+  // }
+  // changeColor() {
+  //   (document.querySelector('.pagination-previous') as HTMLElement).style.color = 'blue';
+  //   (document.querySelector('.pagination-next') as HTMLElement).style.color = 'black';
+  // }
+  delete(book: IBook) {
+
   }
 
-  getBookSaleSpecial(page: number) {
-    this.page = page;
-    this.bookService.getBookSaleSpecial(this.page - 1).subscribe(
-      (data: any) => {
-        this.bookList = data.content;
-        this.size = data.size;
-        this.totalItems = data.totalElements;
-      },
-      () => {
-      },
-      () => {
-        this.topCategory();
-      }
-    );
-  }
 }
