@@ -58,12 +58,4 @@ export class BookService {
   deleteBook(id: number): Observable<void> {
     return this.http.delete<void>(this.API_URL + '/delete/' + id);
   }
-
-  getCartBookList(id: number): Observable<ICartBook[]> {
-    return this.http.get<ICartBook[]>(this.API_URL + '/book-user/cart-book/' + id);
-  }
-
-  updateQuantityCart(cartBook: ICartBook): Observable<void> {
-    return this.http.put<void>(this.API_URL + '/book-user/cart/update-quantity', cartBook);
-  }
 }

@@ -6,6 +6,8 @@ import {CategoryService} from '../../service/book/category.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormGroup} from '@angular/forms';
 import {TokenStorageService} from '../../service/security/token-storage.service';
+import {NotifierService} from 'angular-notifier';
+import {CartService} from '../../service/cart/cart.service';
 
 @Component({
   selector: 'app-search-book',
@@ -55,15 +57,17 @@ export class SearchBookComponent implements OnInit {
   isLoggedIn = false;
   showAdminBoard = false;
   showUser = false;
-  showAccountantBoard = false;
-  showSellBoard = false;
   userName: string;
+
+  accountId: number;
 
   constructor(private bookService: BookService,
               private categoryService: CategoryService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService,
+              private notification: NotifierService,
+              private cartService: CartService) {
   }
 
   ngOnInit(): void {
@@ -76,6 +80,7 @@ export class SearchBookComponent implements OnInit {
       this.getBestSale();
     });
 
+    this.accountId = this.tokenStorageService.getUser().account.accountId;
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
       this.userName = this.tokenStorageService.getUser().account.username;
@@ -171,5 +176,19 @@ export class SearchBookComponent implements OnInit {
         this.topSearch();
       }
     );
+  }
+
+  // thêm sách vào giỏ hàng
+  addBook(bookAdd: IBook) {
+    bookAdd.bookQuantity = 1;
+    this.cartService.addBook(this.accountId, bookAdd).subscribe(() => {
+    }, (error) => {
+      this.notification.notify('error', error.error);
+    }, () => {
+      this.notification.notify('success', 'Sách đã thêm vào Giỏ hàng');
+      // this.router.navigateByUrl('/header', { skipLocationChange: true }).then(() => {
+      //   this.router.navigateByUrl('/book/list');
+      // });
+    });
   }
 }

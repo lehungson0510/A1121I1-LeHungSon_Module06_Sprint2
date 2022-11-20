@@ -25,6 +25,8 @@ import {CartComponent} from './book/cart/cart.component';
 import {EditComponent} from './book/edit/edit.component';
 import {SearchBookComponent} from './book/search-book/search-book.component';
 import { BookBestSellComponent } from './book/book-best-sell/book-best-sell.component';
+import { AccessDeniedComponent } from './access-denied/access-denied.component';
+import {NotifierModule} from 'angular-notifier';
 
 // @ts-ignore
 @NgModule({
@@ -41,17 +43,19 @@ import { BookBestSellComponent } from './book/book-best-sell/book-best-sell.comp
     SaleSpecialComponent,
     EditComponent,
     SearchBookComponent,
-    BookBestSellComponent
+    BookBestSellComponent,
+    AccessDeniedComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        RouterModule,
-        HttpClientModule,
-        NgxPaginationModule,
-        ReactiveFormsModule,
-        FormsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    RouterModule,
+    HttpClientModule,
+    NgxPaginationModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NotifierModule
+  ],
   providers: [authInterceptorProviders,
     JwtHelperService,
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},

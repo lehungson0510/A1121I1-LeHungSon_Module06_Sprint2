@@ -6,6 +6,9 @@ import {ICategory} from '../../model/book/ICategory';
 import {TokenStorageService} from '../../service/security/token-storage.service';
 import {SecurityServiceService} from '../../service/security/security.service';
 import {Component, OnInit} from '@angular/core';
+import {CartService} from '../../service/cart/cart.service';
+import {NotifierService} from 'angular-notifier';
+
 
 @Component({
   selector: 'app-home',
@@ -57,10 +60,14 @@ export class HomeComponent implements OnInit {
 
   scrollTop = 0;
 
+  accountId: number;
+
   constructor(private bookService: BookService,
               private categoryService: CategoryService,
               private router: Router,
               private tokenStorageService: TokenStorageService,
+              private cartService: CartService,
+              private notification: NotifierService,
               private securityService: SecurityServiceService,
   ) {
   }
@@ -73,6 +80,7 @@ export class HomeComponent implements OnInit {
     this.getAllCategory();
     this.getBestSale();
 
+    this.accountId = this.tokenStorageService.getUser().account.accountId;
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
       this.userName = this.tokenStorageService.getUser().account.username;
@@ -182,6 +190,20 @@ export class HomeComponent implements OnInit {
   // }
   delete(book: IBook) {
 
+  }
+
+  // thêm sách vào giỏ hàng
+  addBook(bookAdd: IBook) {
+    bookAdd.bookQuantity = 1;
+    this.cartService.addBook(this.accountId, bookAdd).subscribe(() => {
+    }, (error) => {
+      this.notification.notify('error', error.error);
+    }, () => {
+      this.notification.notify('success', 'Sách đã thêm vào Giỏ hàng');
+      // this.router.navigateByUrl('/header', { skipLocationChange: true }).then(() => {
+      //   this.router.navigateByUrl('/book/list');
+      // });
+    });
   }
 }
 

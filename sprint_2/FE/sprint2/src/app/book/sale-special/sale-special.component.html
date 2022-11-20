@@ -221,7 +221,8 @@
                 <div class="row d-flex justify-content-center button__slide">
                   <!--                  <a [routerLink]="['/detail',bookSlide[0].bookId]" class="btn btn-primary  text-uppercase">Xem-->
                   <!--                    chi tiết</a>-->
-                  <a routerLink="/cart" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
+                  <a *ngIf="isLoggedIn" (click)="addBook(bookSlide[0])" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
+                  <a *ngIf="!isLoggedIn" routerLink="/cart" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
                 </div>
               </div>
             </div>
@@ -254,7 +255,8 @@
                 <div class="row d-flex justify-content-center button__slide">
                   <!--                  <a  class="btn btn-primary  text-uppercase">Xem-->
                   <!--                    chi tiết</a>-->
-                  <a routerLink="/cart" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
+                  <a *ngIf="isLoggedIn" (click)="addBook(bookSlide[1])" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
+                  <a *ngIf="!isLoggedIn" routerLink="/cart" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
                 </div>
               </div>
             </div>
@@ -289,7 +291,8 @@
                 <div class="row d-flex justify-content-center button__slide">
                   <!--                  <a [routerLink]="['/detail',bookSlide[2].bookId]" class="btn btn-primary  text-uppercase">Xem-->
                   <!--                    chi tiết</a>-->
-                  <a routerLink="/cart" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
+                  <a *ngIf="isLoggedIn" (click)="addBook(bookSlide[2])" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
+                  <a *ngIf="!isLoggedIn" routerLink="/cart" class="btn btn-primary ml-10px  text-uppercase">Thêm vào giỏ</a>
                 </div>
               </div>
             </div>
@@ -391,8 +394,8 @@
                                                 <span class="new">{{book.bookPrice - book.bookPrice*book.bookPromotionId.promotionPercent/100 | currency :'VND'}}</span>
                                             </span>
                   </div>
-                  <button routerLink="/cart" title="Add To Cart" class=" add-to-cart">THÊM VÀO GIỎ
-                  </button>
+                  <button *ngIf="isLoggedIn" (click)="addBook(book)" title="Add To Cart" class=" add-to-cart">THÊM VÀO GIỎ</button>
+                  <button *ngIf="!isLoggedIn" routerLink="/cart" title="Add To Cart" class=" add-to-cart">THÊM VÀO GIỎ</button>
                 </div>
               </div>
               <!--              <div class="d-flex justify-content-center load__more" *ngIf=" page*8 < bookList.length">-->
@@ -410,6 +413,7 @@
     <div *ngIf="totalItems > 8 " style="display: flex; justify-content: center; align-items: center">
       <pagination-controls nextLabel=">" previousLabel="<" (pageChange)="getBookSaleSpecial($event)"></pagination-controls>
     </div>
+  </div>
     <!-- Product Area End -->
 
     <!-- Feature Area Srart -->
@@ -473,7 +477,8 @@
                                 <span class="old"> <del>{{bookBestSale[0].bookPrice | currency :'VND'}}</del></span>
                                 <span class="new"> - {{bookBestSale[0].bookPrice - bookBestSale[0].bookPrice*bookBestSale[0].bookPromotionId.promotionPercent/100 | currency :'VND'}}</span>
                             </span>
-                <a routerLink="/cart" class="btn btn-lg btn-primary">Thêm vào giỏ</a>
+                <a *ngIf="isLoggedIn" (click)="addBook(bookBestSale[0])"  class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
+                <a *ngIf="!isLoggedIn" routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
               </div>
               <div class="deal-image d-flex justify-content-end">
                 <img [routerLink]="['/detail',bookBestSale[0].bookId]" class="img-fluid " style="border-radius: 10px; margin-right: 20px; margin-top: 20px" width="56%"  [src]="bookBestSale[0].bookImage" alt="">
@@ -501,10 +506,11 @@
               <img  style="object-fit: cover" width="550px" height="550px" [src]="bookBestSale[1].bookImage" alt="">
               <!--              <img src="assets/images/banner/4.jpg" alt="">-->
               <div class="banner-content nth-child-1">
-                <span class="category">Bán chạy</span>
+                <span class="category">Giảm giá lớn</span>
                 <span class="title">{{bookBestSale[1].bookName}} <br>
                                 </span>
-                <a routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
+<!--                <a *ngIf="isLoggedIn" (click)="addBook(bookBestSale[1])"  class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>-->
+<!--                <a *ngIf="!isLoggedIn" routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>-->
               </div>
             </div>
           </div>
@@ -512,19 +518,21 @@
             <div class="single-banner nth-child-2 mb-lm-30px mt-lm-30px">
               <img [routerLink]="['/detail',bookBestSale[2].bookId]" style="object-fit: cover" width="550px" height="275px" [src]="bookBestSale[2].bookImage" alt="">
               <div class="banner-content nth-child-2 pt-5">
-                <span class="category" >Bán chạy </span>
+                <span class="category" >Giảm giá lớn </span>
                 <span class="title">{{bookBestSale[2].bookName}} <br>
                               - {{bookBestSale[2].bookPromotionId.promotionPercent}}%</span>
-                <a routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
+<!--                <a *ngIf="isLoggedIn" (click)="addBook(bookBestSale[2])"  class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>-->
+<!--                <a *ngIf="!isLoggedIn" routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>-->
               </div>
             </div>
             <div [routerLink]="['/detail',bookBestSale[3].bookId]" class="single-banner nth-child-3">
               <img  style="object-fit:cover" width="550px" height="275px" [src]="bookBestSale[3].bookImage" alt="">
               <div class="banner-content nth-child-3">
-                <span class="category" style="color: white">Bán chạy</span>
+                <span class="category" style="color: white">Giảm giá lớn</span>
                 <span class="title" style="color: white">{{bookBestSale[3].bookName}} <br>
                                 - {{bookBestSale[3].bookPromotionId.promotionPercent}}%</span>
-                <a routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>
+<!--                <a *ngIf="isLoggedIn" (click)="addBook(bookBestSale[3])"  class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>-->
+<!--                <a *ngIf="!isLoggedIn" routerLink="/cart" class="shop-link btn btn-primary text-uppercase">Thêm vào giỏ</a>-->
               </div>
             </div>
           </div>
@@ -562,6 +570,7 @@
         </div>
       </div>
     </div>
+
     <!-- Search Modal End -->
 
 
@@ -641,11 +650,15 @@
                     Ngày phát hành: <span>{{bookDetail.bookPublishDate | date : 'dd-MM-yyyy'}}</span>
                   </p>
                   <div class="pro-details-quality">
-                    <div class="cart-plus-minus">
-                      <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1"/>
+<!--                    <div class="cart-plus-minus">-->
+<!--                      <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1"/>-->
+<!--                    </div>-->
+                    <div *ngIf="isLoggedIn" (click)="addBook(bookDetail)" class="pro-details-cart">
+                      <button  class="add-cart"> THÊM VÀO GIỎ
+                      </button>
                     </div>
-                    <div class="pro-details-cart">
-                      <button routerLink="/cart" class="add-cart"> THÊM VÀO GIỎ
+                    <div *ngIf="!isLoggedIn" routerLink="/cart" class="pro-details-cart">
+                      <button  class="add-cart"> THÊM VÀO GIỎ
                       </button>
                     </div>
                     <div class="pro-details-compare-wishlist pro-details-wishlist ">
@@ -691,4 +704,5 @@
       </div>
     </div>
   </div>
-</div>
+</body>
+<notifier-container></notifier-container>

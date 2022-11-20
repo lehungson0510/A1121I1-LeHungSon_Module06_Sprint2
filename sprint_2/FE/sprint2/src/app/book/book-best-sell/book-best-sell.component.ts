@@ -6,6 +6,8 @@ import {CategoryService} from '../../service/book/category.service';
 import {Router} from '@angular/router';
 import {TokenStorageService} from '../../service/security/token-storage.service';
 import {SecurityServiceService} from '../../service/security/security.service';
+import {NotifierService} from 'angular-notifier';
+import {CartService} from '../../service/cart/cart.service';
 
 @Component({
   selector: 'app-book-best-sell',
@@ -57,11 +59,15 @@ export class BookBestSellComponent implements OnInit {
   showUser = false;
   userName: string;
 
+  accountId : number;
+
   constructor(private bookService: BookService,
               private categoryService: CategoryService,
               private router: Router,
               private tokenStorageService: TokenStorageService,
               private securityService: SecurityServiceService,
+              private notification: NotifierService,
+              private cartService: CartService
   ) {
   }
 
@@ -73,6 +79,7 @@ export class BookBestSellComponent implements OnInit {
     this.getAllCategory();
     this.getBestSale();
 
+    this.accountId = this.tokenStorageService.getUser().account.accountId;
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
       this.userName = this.tokenStorageService.getUser().account.username;
@@ -172,6 +179,20 @@ export class BookBestSellComponent implements OnInit {
   // }
   delete(book: IBook) {
 
+  }
+
+  // thêm sách vào giỏ hàng
+  addBook(bookAdd: IBook) {
+    bookAdd.bookQuantity = 1;
+    this.cartService.addBook(this.accountId, bookAdd).subscribe(() => {
+    }, (error) => {
+      this.notification.notify('error', error.error);
+    }, () => {
+      this.notification.notify('success', 'Sách đã thêm vào Giỏ hàng');
+      // this.router.navigateByUrl('/header', { skipLocationChange: true }).then(() => {
+      //   this.router.navigateByUrl('/book/list');
+      // });
+    });
   }
 
 }

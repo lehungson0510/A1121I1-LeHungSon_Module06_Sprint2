@@ -13,6 +13,7 @@ import {AuthGuard} from './helpers/auth.guard';
 import {BothAuthGuard} from './helpers/both-auth.guard';
 import {BothAuthUserGuardAuth} from './helpers/both-auth-user.guard';
 import {BookBestSellComponent} from './book/book-best-sell/book-best-sell.component';
+import {AccessDeniedComponent} from './access-denied/access-denied.component';
 
 
 const routes: Routes = [
@@ -25,7 +26,8 @@ const routes: Routes = [
   {path: 'sale-special', component: SaleSpecialComponent},
   {path: 'search/:name', component: SearchBookComponent},
   {path: 'edit/:id', component: EditComponent},
-  {path: 'book-best-sell', component: BookBestSellComponent}
+  {path: 'book-best-sell', component: BookBestSellComponent},
+  {path: 'auth/access-denied', component: AccessDeniedComponent},
 ];
 
 @NgModule({

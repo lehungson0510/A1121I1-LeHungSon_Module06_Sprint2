@@ -3,6 +3,8 @@ import {ICategory} from '../../model/book/ICategory';
 import {CategoryService} from '../../service/book/category.service';
 import {TokenStorageService} from '../../service/security/token-storage.service';
 import {Router} from '@angular/router';
+import {CartService} from '../../service/cart/cart.service';
+import {ICartBook} from '../../model/cart/ICartBook';
 
 @Component({
   selector: 'app-header',
@@ -21,13 +23,20 @@ export class HeaderComponent implements OnInit {
   showSellBoard = false;
   userName: string;
 
+  accountId: number;
+
+  totalQuantityCart = 0;
+
   constructor(private categoryService: CategoryService,
               private tokenStorageService: TokenStorageService,
-              private router: Router) {
+              private router: Router,
+              private cartService: CartService) {
   }
 
   ngOnInit(): void {
     this.getAllCategory();
+    this.accountId = this.tokenStorageService.getUser().account.accountId;
+    this.getQuantityCart(this.accountId);
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
       this.userName = this.tokenStorageService.getUser().account.username;
@@ -57,5 +66,13 @@ export class HeaderComponent implements OnInit {
 
   getNameSearch(value: string) {
     this.router.navigateByUrl('/search/' + value);
+  }
+
+  getQuantityCart(id: number) {
+    this.cartService.getCartBookList(id).subscribe((data: ICartBook[]) => {
+      data.forEach((cartBook) => {
+        this.totalQuantityCart += cartBook.cartId.cartQuantity;
+      });
+    });
   }
 }

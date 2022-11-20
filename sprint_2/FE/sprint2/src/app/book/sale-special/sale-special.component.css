@@ -92,3 +92,7 @@ img{
 .banner-content .category, .title {
   font-family: "Segoe UI";
 }
+
+.quickview:hover {
+  cursor: pointer;
+}

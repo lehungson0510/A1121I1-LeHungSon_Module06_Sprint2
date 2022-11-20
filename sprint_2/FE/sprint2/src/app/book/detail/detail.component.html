@@ -90,14 +90,21 @@
             Ngày phát hành: <span>{{bookDetail.bookPublishDate | date : 'dd-MM-yyyy'}}</span>
           </p>
           <div class="pro-details-quality">
-            <div class="cart-plus-minus">
-              <input class="cart-plus-minus-box" type="number" min="0" name="qtybutton" value="1" />
-            </div>
-            <div routerLink="/cart" class="pro-details-cart">
+<!--            <div class="cart-plus-minus">-->
+<!--              <input class="cart-plus-minus-box" type="number" min="0" name="qtybutton" value="1" />-->
+<!--            </div>-->
+            <div *ngIf="isLoggedIn" (click)="addBook(bookDetail)" class="pro-details-cart">
               <button class="add-cart"> THÊM VÀO GIỎ
               </button>
             </div>
-            <div routerLink="/cart" class="pro-details-cart">
+            <div *ngIf="!isLoggedIn" routerLink="/cart" class="pro-details-cart">
+              <button class="add-cart"> THÊM VÀO GIỎ
+              </button>
+            </div>
+            <div *ngIf="isLoggedIn" (click)="addBook(bookDetail)" class="pro-details-cart">
+              <button class="add-cart buy-button"> MUA NGAY</button>
+            </div>
+            <div *ngIf="!isLoggedIn" routerLink="/cart" class="pro-details-cart">
               <button class="add-cart buy-button"> MUA NGAY</button>
             </div>
             <div class="pro-details-compare-wishlist pro-details-wishlist ">
@@ -347,8 +354,9 @@
                                                 <span class="new">{{authorSame.bookPrice - authorSame.bookPrice*authorSame.bookPromotionId.promotionPercent/100| currency : 'VND'}}</span>
                                             </span>
           </div>
-          <button routerLink="/cart" title="Add To Cart" class=" add-to-cart">THÊM VÀO GIỎ
-          </button>
+          <button *ngIf="isLoggedIn" (click)="addBook(authorSame)" title="Add To Cart" class=" add-to-cart">THÊM VÀO GIỎ</button>
+          <button *ngIf="!isLoggedIn" routerLink="/cart" title="Add To Cart" class=" add-to-cart">THÊM VÀO GIỎ</button>
+
         </div>
       </div>
     </div>
@@ -431,10 +439,14 @@
                 Ngày phát hành: <span>{{bookDetailQuickView.bookPublishDate | date : 'dd-MM-yyyy'}}</span>
               </p>
               <div class="pro-details-quality">
-                <div class="cart-plus-minus">
-                  <input class="cart-plus-minus-box" type="number" min="1" name="qtybutton" value="1"/>
+<!--                <div class="cart-plus-minus">-->
+<!--                  <input class="cart-plus-minus-box" type="number" min="1" name="qtybutton" value="1"/>-->
+<!--                </div>-->
+                <div *ngIf="isLoggedIn" (click)="addBook(bookDetailQuickView)" class="pro-details-cart">
+                  <button class="add-cart"> THÊM VÀO GIỎ
+                  </button>
                 </div>
-                <div routerLink="/cart" class="pro-details-cart">
+                <div *ngIf="!isLoggedIn" routerLink="/cart" class="pro-details-cart">
                   <button class="add-cart"> THÊM VÀO GIỎ
                   </button>
                 </div>
@@ -480,3 +492,4 @@
     </div>
   </div>
 </div>
+<notifier-container></notifier-container>

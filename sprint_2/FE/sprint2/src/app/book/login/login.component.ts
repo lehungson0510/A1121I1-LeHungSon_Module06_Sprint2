@@ -4,6 +4,8 @@ import {SecurityServiceService} from '../../service/security/security.service';
 import {TokenStorageService} from '../../service/security/token-storage.service';
 import {ShareService} from '../../service/security/share.service';
 import {Router} from '@angular/router';
+import {NotifierService} from 'angular-notifier';
+
 // import {HeaderComponent} from '../../layout/header/header.component';
 
 @Component({
@@ -25,12 +27,14 @@ export class LoginComponent implements OnInit {
   urlImg: string;
   role: string;
   idEmployee: any;
+
   constructor(private formBuilder: FormBuilder,
               private tokenStorageService: TokenStorageService,
               private securityService: SecurityServiceService,
               private router: Router,
               private shareService: ShareService,
-             ) {
+              private notification: NotifierService
+  ) {
   }
 
   ngOnInit(): void {
@@ -105,6 +109,7 @@ export class LoginComponent implements OnInit {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 420;
   }
+
   // login
   login() {
     console.log(this.loginForm.value.username);
@@ -155,6 +160,7 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('');
       });
   }
+
   private loadRememberInfo() {
     if (this.tokenStorageService.getUser()) {
       this.role = this.tokenStorageService.getUser().account.roles[0];

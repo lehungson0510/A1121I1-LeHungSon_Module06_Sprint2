@@ -5,6 +5,8 @@ import {BookService} from '../../service/book/book.service';
 import {CategoryService} from '../../service/book/category.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TokenStorageService} from '../../service/security/token-storage.service';
+import {CartService} from '../../service/cart/cart.service';
+import {NotifierService} from 'angular-notifier';
 
 @Component({
   selector: 'app-sale-special',
@@ -61,11 +63,15 @@ export class SaleSpecialComponent implements OnInit {
   showSellBoard = false;
   userName: string;
 
+  accountId: number;
+
   constructor(private bookService: BookService,
               private categoryService: CategoryService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService,
+              private cartService: CartService,
+              private notification: NotifierService) {
   }
 
   ngOnInit(): void {
@@ -74,8 +80,9 @@ export class SaleSpecialComponent implements OnInit {
       this.getBestSale();
       this.getBookSlide();
 
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
-    if (this.isLoggedIn) {
+      this.accountId = this.tokenStorageService.getUser().account.accountId;
+      this.isLoggedIn = !!this.tokenStorageService.getToken();
+      if (this.isLoggedIn) {
       this.userName = this.tokenStorageService.getUser().account.username;
       this.roles = this.tokenStorageService.getUser().account.roles[0].roleName;
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
@@ -180,5 +187,19 @@ export class SaleSpecialComponent implements OnInit {
         this.topCategory();
       }
     );
+  }
+
+  // thêm sách vào giỏ hàng
+  addBook(bookAdd: IBook) {
+    bookAdd.bookQuantity = 1;
+    this.cartService.addBook(this.accountId, bookAdd).subscribe(() => {
+    }, (error) => {
+      this.notification.notify('error', error.error);
+    }, () => {
+      this.notification.notify('success', 'Sách đã thêm vào Giỏ hàng');
+      // this.router.navigateByUrl('/header', { skipLocationChange: true }).then(() => {
+      //   this.router.navigateByUrl('/book/list');
+      // });
+    });
   }
 }
