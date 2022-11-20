@@ -22,4 +22,6 @@ public interface ICartBookRepository extends JpaRepository<CartBook, Long> {
             "having `cart_book`.book_id > 0 and `cart`.cart_status = 0 and `cart`.cart_account_id = ?1\n" +
             ";", nativeQuery = true)
     List<CartBook> getListCartBook(Long id);
+
+    CartBook findByCartId(Cart cart);
 }

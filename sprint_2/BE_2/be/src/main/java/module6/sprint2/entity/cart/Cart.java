@@ -23,7 +23,7 @@ public class Cart {
 
     private Boolean cartStatus = false;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "cart_account_id")
     private Account cartAccountId;
 

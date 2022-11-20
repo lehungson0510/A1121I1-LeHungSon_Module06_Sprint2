@@ -20,4 +20,14 @@ public class CartBookServiceImpl implements ICartBookService {
     public List<CartBook> getListCartBook(Long id) {
         return cartBookRepository.getListCartBook(id);
     }
+
+    @Override
+    public CartBook addBook(CartBook cartBook) {
+        return cartBookRepository.save(cartBook);
+    }
+
+    @Override
+    public CartBook findByCartId(Cart cart) {
+        return cartBookRepository.findByCartId(cart);
+    }
 }

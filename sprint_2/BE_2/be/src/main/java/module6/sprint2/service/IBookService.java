@@ -28,4 +28,6 @@ public interface IBookService {
     void editBook(String name, String img, String content, Double price, String translator, Integer totalPage, String size, LocalDate publishDate, Integer quantity, String publisher, Long idCategory, Long idAuthor, Long idPromotion, Long idBook);
 
     Page<Book> findBookBestSeller(Pageable pageable);
+
+    void updateQuantityBook(Book bookId);
 }

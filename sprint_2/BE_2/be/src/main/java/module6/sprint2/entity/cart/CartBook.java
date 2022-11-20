@@ -11,7 +11,7 @@ public class CartBook {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartBookId;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "cart_id")
     private Cart cartId;
 

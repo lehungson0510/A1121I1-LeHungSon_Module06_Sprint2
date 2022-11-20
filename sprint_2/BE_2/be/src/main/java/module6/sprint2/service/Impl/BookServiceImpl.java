@@ -66,4 +66,9 @@ public class BookServiceImpl implements IBookService {
     public Page<Book> findBookBestSeller(Pageable pageable) {
         return bookRepository.findBookBestSeller(pageable);
     }
+
+    @Override
+    public void updateQuantityBook(Book bookId) {
+        bookRepository.save(bookId);
+    }
 }

@@ -2,8 +2,6 @@ package module6.sprint2.controller;
 
 import module6.sprint2.entity.book.Book;
 import module6.sprint2.entity.book.Category;
-import module6.sprint2.entity.cart.Cart;
-import module6.sprint2.entity.cart.CartBook;
 import module6.sprint2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -147,16 +144,6 @@ public class BookController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/book-user/cart-book/{id}")
-    public ResponseEntity<List<CartBook>> findAllCart(@PathVariable("id") Long id) {
-        List<CartBook> cartBookList = cartBookService.getListCartBook(id);
-        if (cartBookList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(cartBookList, HttpStatus.OK);
-        }
-    }
-
     @GetMapping("/book-user/no-login/best-seller")
     public ResponseEntity<Page<Book>> findBookBestSeller(@PageableDefault(value = 8) Pageable pageable) {
         System.out.println(pageable.getPageNumber());
@@ -166,16 +153,6 @@ public class BookController {
         } else {
             return new ResponseEntity<>(bookList, HttpStatus.OK);
         }
-    }
-
-    @PutMapping("/book-user/cart/update-quantity")
-    public ResponseEntity<CartBook> updateQuantityCart(@RequestBody CartBook cartBook) {
-        Double totalMoney = cartBook.getBookId().getBookPrice() * cartBook.getCartId().getCartQuantity()
-                - cartBook.getBookId().getBookPrice() * cartBook.getCartId().getCartQuantity()
-                * (cartBook.getBookId().getBookPromotionId().getPromotionPercent() / 100);
-        cartBook.getCartId().setCartTotalMoney(totalMoney);
-        cartService.updateQuantityCart(cartBook.getCartId().getCartQuantity(), cartBook.getCartId().getCartTotalMoney(), cartBook.getCartId().getCartId());
-        return new ResponseEntity<>(cartBook, HttpStatus.CREATED);
     }
 }
 
