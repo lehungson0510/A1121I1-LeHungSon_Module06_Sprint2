@@ -105,10 +105,11 @@ public class CartController {
         }
 
         String cartCodePayment = "";
-        String[] cartCodeArray = cartCode.split("-");
+//        String[] cartCodeArray = cartCode.split("-");
 
 
-        cartCodePayment = "C-" + (Integer.parseInt(cartCodeArray[1]) + 1);
+//        cartCodePayment = "C-" + (Integer.parseInt(cartCodeArray[1]) + 1);
+        cartCodePayment = "C-" + (Integer.parseInt(cartCode) + 1);
 
         Cart cart = new Cart();
 
@@ -163,10 +164,11 @@ public class CartController {
         }
 
         String cartCodePayment = "";
-        String[] cartCodeArray = cartCode.split("-");
-        System.out.println(Integer.parseInt(cartCodeArray[1]) );
 
-        cartCodePayment = "C-" + (Integer.parseInt(cartCodeArray[1]) + 1);
+//        String[] cartCodeArray = cartCode.split("-");
+        System.out.println(Integer.parseInt(cartCode) );
+
+        cartCodePayment = "C-" + (Integer.parseInt(cartCode) + 1);
 
 //        if ((Integer.parseInt(cartCodeArray[1]) + 1) < 10) {
 //            cartCodePayment = "C-00" + (Integer.parseInt(cartCodeArray[1]) + 1);
