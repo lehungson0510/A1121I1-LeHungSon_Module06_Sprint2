@@ -8,6 +8,7 @@ import {SecurityServiceService} from '../../service/security/security.service';
 import {Component, OnInit} from '@angular/core';
 import {CartService} from '../../service/cart/cart.service';
 import {NotifierService} from 'angular-notifier';
+import {HeaderComponent} from '../../layout/header/header.component';
 
 
 @Component({
@@ -69,6 +70,7 @@ export class HomeComponent implements OnInit {
               private cartService: CartService,
               private notification: NotifierService,
               private securityService: SecurityServiceService,
+              private headerComponent: HeaderComponent
   ) {
   }
 
@@ -200,6 +202,7 @@ export class HomeComponent implements OnInit {
       this.notification.notify('error', error.error);
     }, () => {
       this.notification.notify('success', 'Sách đã thêm vào Giỏ hàng');
+      this.headerComponent.getQuantityCart(this.accountId);
       // this.router.navigateByUrl('/header', { skipLocationChange: true }).then(() => {
       //   this.router.navigateByUrl('/book/list');
       // });

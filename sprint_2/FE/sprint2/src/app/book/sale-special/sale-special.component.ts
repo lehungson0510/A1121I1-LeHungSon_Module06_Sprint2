@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TokenStorageService} from '../../service/security/token-storage.service';
 import {CartService} from '../../service/cart/cart.service';
 import {NotifierService} from 'angular-notifier';
+import {HeaderComponent} from '../../layout/header/header.component';
 
 @Component({
   selector: 'app-sale-special',
@@ -71,7 +72,8 @@ export class SaleSpecialComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private tokenStorageService: TokenStorageService,
               private cartService: CartService,
-              private notification: NotifierService) {
+              private notification: NotifierService,
+              private headerComponent: HeaderComponent) {
   }
 
   ngOnInit(): void {
@@ -197,6 +199,7 @@ export class SaleSpecialComponent implements OnInit {
       this.notification.notify('error', error.error);
     }, () => {
       this.notification.notify('success', 'Sách đã thêm vào Giỏ hàng');
+      this.headerComponent.getQuantityCart(this.accountId);
       // this.router.navigateByUrl('/header', { skipLocationChange: true }).then(() => {
       //   this.router.navigateByUrl('/book/list');
       // });

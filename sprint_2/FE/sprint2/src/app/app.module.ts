@@ -56,7 +56,7 @@ import {NotifierModule} from 'angular-notifier';
     FormsModule,
     NotifierModule
   ],
-  providers: [authInterceptorProviders,
+  providers: [authInterceptorProviders, HeaderComponent,
     JwtHelperService,
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
     {provide: APP_BASE_HREF, useValue: '/'}

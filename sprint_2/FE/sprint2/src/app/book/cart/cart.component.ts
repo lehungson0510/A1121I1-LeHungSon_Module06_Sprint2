@@ -6,7 +6,8 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {CartService} from '../../service/cart/cart.service';
 import {NotifierService} from 'angular-notifier';
 import {ICart} from '../../model/cart/ICart';
-import {IBook} from '../../model/book/IBook';
+import {render} from 'creditcardpayments/creditCardPayments';
+import {HeaderComponent} from '../../layout/header/header.component';
 
 
 @Component({
@@ -43,10 +44,23 @@ export class CartComponent implements OnInit {
 
   cartPaymentList: ICart[] = [];
 
+  quantityBookDelete: number[] = [];
+
   constructor(private bookService: BookService,
               private tokenStorageService: TokenStorageService,
               private cartService: CartService,
-              private notification: NotifierService) {
+              private notification: NotifierService,
+              private headerComponent: HeaderComponent) {
+    render(
+      {
+        id: '#myPayPal1',
+        currency: 'USD',
+        value: '300.00',
+        onApprove: (details => {
+          this.notification.notify('success', 'Thanh toán thành công');
+        })
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -149,8 +163,20 @@ export class CartComponent implements OnInit {
 
   changeQuantity(cartBook: ICartBook, quantity: any) {
     if (quantity <= 0) {
-      quantity = 1;
+      quantity = 0;
+      (document.getElementById('total-quantity-cart-id') as HTMLFormElement).click();
     }
+    // if (quantity === 0) {
+    //   this.showInfoCartDelete(cartBook);
+    //   const container = document.getElementById('container');
+    //   const button = document.createElement('input');
+    //   button.type = 'button';
+    //   button.style.display = 'none';
+    //   button.setAttribute('data-toggle', 'modal');
+    //   button.setAttribute('data-target', '#deleteCart');
+    //   container.appendChild(button);
+    //   button.click();
+    // }
     if (quantity > cartBook.bookId.bookQuantity) {
       quantity = cartBook.bookId.bookQuantity;
     }
@@ -158,8 +184,10 @@ export class CartComponent implements OnInit {
     this.cartService.updateQuantityCart(cartBook).subscribe(data => {
     }, () => {
     }, () => {
+      // this.headerComponent.getQuantityCart(this.accountId);
       this.getCartBookList(this.accountId);
       this.getTotalMoney();
+      this.headerComponent.getQuantityCart(this.accountId);
     });
   }
 
@@ -168,7 +196,6 @@ export class CartComponent implements OnInit {
   }
 
   delete(cartBookId: number) {
-    console.log(cartBookId);
     this.cartService.deleteBookCart(cartBookId).subscribe(
       // this.cartService.deleteBookCart(cartBook.cartId.cartId).subscribe(
       () => {
@@ -177,8 +204,10 @@ export class CartComponent implements OnInit {
       },
       () => {
         this.getCartBookList(this.accountId);
+        this.getTotalMoney();
         this.notification.notify('success', 'Đã xóa sản phẩm');
         this.topFunction2();
+        this.headerComponent.getQuantityCart(this.accountId);
       },
     );
   }
@@ -197,19 +226,44 @@ export class CartComponent implements OnInit {
               () => {
                 this.getCartBookList(this.accountId);
                 this.topFunction2();
+                this.getTotalMoney();
+                this.headerComponent.getQuantityCart(this.accountId);
               },
             );
           }
         });
       }
     });
-    if (this.checkList)
-    this.notification.notify('success', 'Đã xóa sản phẩm');
+
+    // Kiểm tra xem có sản phẩm để xóa không?
+    this.cartBookList.forEach((check, index) => {
+      if (this.checkList[index]) {
+        this.quantityBookDelete.push(1);
+      }
+    });
+    if (this.quantityBookDelete.length < 1) {
+      this.notification.notify('warning', 'Vui lòng chọn sản phẩm');
+    } else {
+      this.notification.notify('success', 'Đã xóa sản phẩm');
+      this.quantityBookDelete.splice(0, this.quantityBookDelete.length);
+    }
   }
 
   payment() {
+    // render(
+    //   {
+    //     id: '#myPayPal',
+    //     currency: 'VND',
+    //     value: '300.00',
+    //     onApprove: (details => {
+    //       this.notification.notify('success', 'Thanh toán thành công');
+    //     })
+    //   }
+    // );
     this.cartBookList.forEach((check, index) => {
       if (this.checkList[index]) {
+        // Kiểm tra số lượng sản phẩm đã chọn?
+        this.quantityBookDelete.push(1);
         this.cartPaymentList.push(this.cartBookList[index].cartId);
       }
     });
@@ -217,8 +271,21 @@ export class CartComponent implements OnInit {
     this.cartService.paymentCart(this.cartPaymentList).subscribe(data => {
     }, () => {
     }, () => {
-      this.notification.notify('success', 'Thanh toán thành công');
-      window.location.assign('/cart');
+      if (this.quantityBookDelete.length < 1) {
+        this.notification.notify('warning', 'Vui lòng chọn sản phẩm');
+      } else {
+        this.notification.notify('success', 'Thanh toán thành công');
+        // load page
+        this.getCartBookList(this.accountId);
+        this.getTotalMoney();
+        this.topFunction2();
+        this.quantityBookDelete.splice(0, this.quantityBookDelete.length);
+        this.checkList.forEach((checked, index) => {
+          this.checkList[index] = false;
+        });
+        this.checkAll = false;
+        // window.location.assign('/cart');
+      }
     });
   }
 }

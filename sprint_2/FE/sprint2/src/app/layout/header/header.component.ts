@@ -70,9 +70,14 @@ export class HeaderComponent implements OnInit {
 
   getQuantityCart(id: number) {
     this.cartService.getCartBookList(id).subscribe((data: ICartBook[]) => {
+      this.totalQuantityCart = 0;
       data.forEach((cartBook) => {
         this.totalQuantityCart += cartBook.cartId.cartQuantity;
       });
-    });
+    },
+      () => {},
+      () => {
+        (document.getElementById('total-quantity-cart-id') as HTMLFormElement).innerText = this.totalQuantityCart.toString();
+      });
   }
 }

@@ -8,6 +8,7 @@ import {TokenStorageService} from '../../service/security/token-storage.service'
 import {SecurityServiceService} from '../../service/security/security.service';
 import {NotifierService} from 'angular-notifier';
 import {CartService} from '../../service/cart/cart.service';
+import {HeaderComponent} from '../../layout/header/header.component';
 
 @Component({
   selector: 'app-book-best-sell',
@@ -59,7 +60,7 @@ export class BookBestSellComponent implements OnInit {
   showUser = false;
   userName: string;
 
-  accountId : number;
+  accountId: number;
 
   constructor(private bookService: BookService,
               private categoryService: CategoryService,
@@ -67,7 +68,8 @@ export class BookBestSellComponent implements OnInit {
               private tokenStorageService: TokenStorageService,
               private securityService: SecurityServiceService,
               private notification: NotifierService,
-              private cartService: CartService
+              private cartService: CartService,
+              private headerComponent: HeaderComponent
   ) {
   }
 
@@ -189,6 +191,7 @@ export class BookBestSellComponent implements OnInit {
       this.notification.notify('error', error.error);
     }, () => {
       this.notification.notify('success', 'Sách đã thêm vào Giỏ hàng');
+      this.headerComponent.getQuantityCart(this.accountId);
       // this.router.navigateByUrl('/header', { skipLocationChange: true }).then(() => {
       //   this.router.navigateByUrl('/book/list');
       // });

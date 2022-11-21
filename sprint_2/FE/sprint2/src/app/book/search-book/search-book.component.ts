@@ -8,6 +8,7 @@ import {FormGroup} from '@angular/forms';
 import {TokenStorageService} from '../../service/security/token-storage.service';
 import {NotifierService} from 'angular-notifier';
 import {CartService} from '../../service/cart/cart.service';
+import {HeaderComponent} from '../../layout/header/header.component';
 
 @Component({
   selector: 'app-search-book',
@@ -67,7 +68,8 @@ export class SearchBookComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private tokenStorageService: TokenStorageService,
               private notification: NotifierService,
-              private cartService: CartService) {
+              private cartService: CartService,
+              private headerComponent: HeaderComponent) {
   }
 
   ngOnInit(): void {
@@ -186,6 +188,7 @@ export class SearchBookComponent implements OnInit {
       this.notification.notify('error', error.error);
     }, () => {
       this.notification.notify('success', 'Sách đã thêm vào Giỏ hàng');
+      this.headerComponent.getQuantityCart(this.accountId);
       // this.router.navigateByUrl('/header', { skipLocationChange: true }).then(() => {
       //   this.router.navigateByUrl('/book/list');
       // });
