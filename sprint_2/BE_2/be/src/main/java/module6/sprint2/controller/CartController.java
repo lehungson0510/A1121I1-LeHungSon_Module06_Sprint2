@@ -87,35 +87,37 @@ public class CartController {
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
 
-        // Tự code
-        LocalDate current = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formatted = current.format(formatter);
-
-        // Tự code
-        List<String> cartCodeList = cartService.checkCodeCart();
-
-        // lấy mã hoá đơn, tự code
-        String cartCode = "";
-        for (String code : cartCodeList) {
-            cartCode = code;
-        }
-        if (cartCode.equals("")) {
-            cartCode = "1";
-        }
-
-        String cartCodePayment = "";
+//        // Tự code
+//        LocalDate current = LocalDate.now();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        String formatted = current.format(formatter);
+//
+//        // Tự code
+//        List<String> cartCodeList = cartService.checkCodeCart();
+//
+//        // lấy mã hoá đơn, tự code
+//        String cartCode = "";
+//        for (String code : cartCodeList) {
+//            cartCode = code;
+//        }
+//        if (cartCode.equals("")) {
+//            cartCode = "1";
+//        }
+//
+//        String cartCodePayment = "";
 //        String[] cartCodeArray = cartCode.split("-");
-
-
-//        cartCodePayment = "C-" + (Integer.parseInt(cartCodeArray[1]) + 1);
-        cartCodePayment = "C-" + (Integer.parseInt(cartCode) + 1);
+//
+//
+//        cartCodePayment = "MHD-" + (Integer.parseInt(cartCodeArray[1]) + 1);
+////        cartCodePayment = "C-" + (Integer.parseInt(cartCode) + 1);
+//
+//
+//
+//        // Tự code
+//        cart.setCartPurchaseDate(current);
+//        cart.setCartCode(cartCodePayment);
 
         Cart cart = new Cart();
-
-        // Tự code
-        cart.setCartPurchaseDate(current);
-        cart.setCartCode(cartCodePayment);
 
         Double totalMoney = book.getBookPrice() * book.getBookQuantity()
                 - book.getBookPrice() * book.getBookQuantity()
@@ -159,24 +161,18 @@ public class CartController {
         for (String code : cartCodeList) {
             cartCode = code;
         }
-        if (cartCode.equals("")) {
-            cartCode = "1";
-        }
+//        if (cartCode.equals("")) {
+//            cartCode = "1";
+//        }
 
         String cartCodePayment = "";
+        if (!cartCodeList.isEmpty()) {
+            String[] cartCodeArray = cartCode.split("-");
+            cartCodePayment = "MHD-" + (Integer.parseInt(cartCodeArray[1]) + 1);
+        } else {
+            cartCodePayment = "MHD-1";
+        }
 
-//        String[] cartCodeArray = cartCode.split("-");
-        System.out.println(Integer.parseInt(cartCode) );
-
-        cartCodePayment = "C-" + (Integer.parseInt(cartCode) + 1);
-
-//        if ((Integer.parseInt(cartCodeArray[1]) + 1) < 10) {
-//            cartCodePayment = "C-00" + (Integer.parseInt(cartCodeArray[1]) + 1);
-//        } else if (Integer.parseInt(cartCodeArray[1] + 1) < 100) {
-//            cartCodePayment = "C-0" + (Integer.parseInt(cartCodeArray[1]) + 1);
-//        } else {
-//            cartCodePayment = "C-" + (Integer.parseInt(cartCodeArray[1]) + 1);
-//        }
 
         // lấy ngày hiện tại
         LocalDateTime current = LocalDateTime.now();
@@ -186,14 +182,14 @@ public class CartController {
         CartBook cartBook = null;
         // tiến hành thanh toán
         for (Cart cart : cartListPayment) {
-            cartService.paymentCart(cart.getCartCode(), formatted, true, cart.getCartId());
-//            cartService.paymentCart(cartCodePayment, formatted, true, cart.getCartId());
+            cartService.paymentCart(cartCodePayment, formatted, true, cart.getCartId());
 
             // cập nhật lại số lượng sách
             cartBook = cartBookService.findByCartId(cart);
             cartBook.getBookId().setBookQuantity(cartBook.getBookId().getBookQuantity() - cart.getCartQuantity());
             bookService.updateQuantityBook(cartBook.getBookId());
         }
+        System.out.println(cartListPayment.size());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -201,7 +197,7 @@ public class CartController {
     @PostMapping("/delete-many-book-cart")
     public ResponseEntity<?> deleteManyCartBook(@RequestBody Long[] cardId) {
         System.out.println("Xóa");
-        for (int i=0 ; i < cardId.length; i++) {
+        for (int i = 0; i < cardId.length; i++) {
             cartService.deleteManyBookCart(cardId[i]);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

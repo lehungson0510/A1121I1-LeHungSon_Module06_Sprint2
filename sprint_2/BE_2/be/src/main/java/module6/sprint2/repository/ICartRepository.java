@@ -27,8 +27,8 @@ public interface ICartRepository extends JpaRepository<Cart, Long> {
     void paymentCart(String cartCode, String cartPurchaseDate, Boolean cartStatus, Long cartId);
 
     // check code
-//    @Query(value = "SELECT `cart`.cart_code FROM `cart` where `cart`.cart_code is not null order by cart_purchase_date asc", nativeQuery = true)
-    @Query(value = "SELECT `cart`.cart_id FROM `cart` where `cart`.cart_id is not null order by `cart`.cart_id ;", nativeQuery = true)
+    @Query(value = "SELECT `cart`.cart_code FROM `cart` where `cart`.cart_code is not null order by cart_purchase_date", nativeQuery = true)
+//    @Query(value = "SELECT `cart`.cart_id FROM `cart` where `cart`.cart_id is not null order by `cart`.cart_id ;", nativeQuery = true)
     List<String> checkCodeCart();
 
     @Modifying
