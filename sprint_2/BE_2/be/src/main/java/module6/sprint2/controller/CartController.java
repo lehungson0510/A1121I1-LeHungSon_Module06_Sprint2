@@ -176,7 +176,7 @@ public class CartController {
 
         // lấy ngày hiện tại
         LocalDateTime current = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formatted = current.format(formatter);
 
         CartBook cartBook = null;
