@@ -118,9 +118,12 @@
                 <td class="product-quantity">
                   <div class="cart-plus-minus">
                     <input class="cart-plus-minus-box" #quantity (change)="changeQuantity(cartBook,quantity.value)"
-                           min="1" [max]="quantityBook[i]" type="number" name="qtybutton"
+                              min="0"
+                           type="number" name="qtybutton"
                            value="{{cartBook.cartId.cartQuantity}}"/>
+<!--                    [max]="quantityBook[i]"-->
                   </div>
+                  <div hidden id="delete" data-bs-toggle="modal" data-bs-target="#deleteCart"></div>
                 </td>
                 <td class="product-subtotal">{{totalMoneyPerProduct[i] | currency : 'VND'}}</td>
                 <td class="product-remove">

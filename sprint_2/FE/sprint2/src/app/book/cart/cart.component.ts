@@ -46,24 +46,27 @@ export class CartComponent implements OnInit {
 
   quantityBookDelete: number[] = [];
 
+  moneyPayment: string = '';
+
   constructor(private bookService: BookService,
               private tokenStorageService: TokenStorageService,
               private cartService: CartService,
               private notification: NotifierService,
               private headerComponent: HeaderComponent) {
+  }
+
+  ngOnInit(): void {
     render(
       {
         id: '#myPayPal1',
-        currency: 'USD',
-        value: '300.00',
+        currency: 'VND',
+        value: '500',
         onApprove: (details => {
           this.notification.notify('success', 'Thanh toán thành công');
         })
       }
     );
-  }
 
-  ngOnInit(): void {
     this.topFunction();
     this.accountId = this.tokenStorageService.getUser().account.accountId;
     this.getCartBookList(this.accountId);
@@ -162,9 +165,10 @@ export class CartComponent implements OnInit {
   }
 
   changeQuantity(cartBook: ICartBook, quantity: any) {
+    this.showInfoCartDelete(cartBook);
     if (quantity <= 0) {
-      quantity = 0;
-      (document.getElementById('total-quantity-cart-id') as HTMLFormElement).click();
+      quantity = 1;
+      (document.getElementById('delete') as HTMLFormElement).click();
     }
     // if (quantity === 0) {
     //   this.showInfoCartDelete(cartBook);
@@ -178,6 +182,7 @@ export class CartComponent implements OnInit {
     //   button.click();
     // }
     if (quantity > cartBook.bookId.bookQuantity) {
+      this.notification.notify('error', 'Không đủ số lượng. Vui lòng thử lại sau');
       quantity = cartBook.bookId.bookQuantity;
     }
     cartBook.cartId.cartQuantity = quantity;
@@ -213,28 +218,24 @@ export class CartComponent implements OnInit {
   }
 
   deleteManyBookCart() {
-    this.cartService.getCartBookList(this.accountId).subscribe((data: ICartBook[]) => {
-      if (data.length > 0) {
-        data.forEach((check, index) => {
-          if (this.checkList[index]) {
-            this.idManyCartBook[index] = check.cartId.cartId;
-            this.cartService.deleteManyBookCart(this.idManyCartBook).subscribe(
-              () => {
-              },
-              () => {
-              },
-              () => {
-                this.getCartBookList(this.accountId);
-                this.topFunction2();
-                this.getTotalMoney();
-                this.headerComponent.getQuantityCart(this.accountId);
-              },
-            );
-          }
-        });
+    this.cartBookList.forEach((check, index) => {
+      if (this.checkList[index]) {
+        // Kiểm tra số lượng sản phẩm đã chọn?
+        this.quantityBookDelete.push(1);
+        this.idManyCartBook[index] = check.cartId.cartId;
       }
     });
-
+    this.cartService.deleteManyBookCart(this.idManyCartBook).subscribe(
+      () => {
+      },
+      () => {
+      },
+      () => {
+        this.getCartBookList(this.accountId);
+        this.getTotalMoney();
+        this.headerComponent.getQuantityCart(this.accountId);
+      },
+    );
     // Kiểm tra xem có sản phẩm để xóa không?
     this.cartBookList.forEach((check, index) => {
       if (this.checkList[index]) {
@@ -245,21 +246,16 @@ export class CartComponent implements OnInit {
       this.notification.notify('warning', 'Vui lòng chọn sản phẩm');
     } else {
       this.notification.notify('success', 'Đã xóa sản phẩm');
+      this.topFunction2();
       this.quantityBookDelete.splice(0, this.quantityBookDelete.length);
+      this.checkList.forEach((checked, index) => {
+        this.checkList[index] = false;
+      });
+      this.checkAll = false;
     }
   }
 
   payment() {
-    // render(
-    //   {
-    //     id: '#myPayPal',
-    //     currency: 'VND',
-    //     value: '300.00',
-    //     onApprove: (details => {
-    //       this.notification.notify('success', 'Thanh toán thành công');
-    //     })
-    //   }
-    // );
     this.cartBookList.forEach((check, index) => {
       if (this.checkList[index]) {
         // Kiểm tra số lượng sản phẩm đã chọn?
@@ -275,10 +271,14 @@ export class CartComponent implements OnInit {
         this.notification.notify('warning', 'Vui lòng chọn sản phẩm');
       } else {
         this.notification.notify('success', 'Thanh toán thành công');
+        this.headerComponent.getQuantityCart(this.accountId);
         // load page
         this.getCartBookList(this.accountId);
         this.getTotalMoney();
         this.topFunction2();
+
+        // Xóa đi mấy cái đã tick trước đó
+        this.cartPaymentList.splice(0, this.cartPaymentList.length);
         this.quantityBookDelete.splice(0, this.quantityBookDelete.length);
         this.checkList.forEach((checked, index) => {
           this.checkList[index] = false;
