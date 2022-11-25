@@ -58,7 +58,7 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     render(
       {
-        id: '#myPayPal1',
+        id: '#myPayPal',
         currency: 'VND',
         value: '500',
         onApprove: (details => {
@@ -270,6 +270,7 @@ export class CartComponent implements OnInit {
       if (this.quantityBookDelete.length < 1) {
         this.notification.notify('warning', 'Vui lòng chọn sản phẩm');
       } else {
+        // (document.getElementById('paymentModal') as HTMLFormElement).click();
         this.notification.notify('success', 'Thanh toán thành công');
         this.headerComponent.getQuantityCart(this.accountId);
         // load page

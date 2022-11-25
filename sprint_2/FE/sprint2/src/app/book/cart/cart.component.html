@@ -91,7 +91,7 @@
             <table>
               <thead>
               <tr>
-                <th class=" m-0"><input type="checkbox" style="cursor: pointer" (change)="isAllChecked()" [checked]="checkAll"></th>
+                <th class=" m-0"><input type="checkbox" style="cursor: pointer; width: 15px; height: 15px" (change)="isAllChecked()" [checked]="checkAll"></th>
                 <th>Ảnh</th>
                 <th>Tên sản phẩm</th>
                 <th>Giá cả</th>
@@ -103,7 +103,7 @@
               <tbody>
               <tr
                 *ngFor="let cartBook of cartBookList, index as i">
-                <td style="width: 5px" class=" m-0"><input style="cursor: pointer" type="checkbox" (change)="isChecked(i)"
+                <td style="width: 5px" class=" m-0"><input style="cursor: pointer; width: 15px; height: 15px" type="checkbox" (change)="isChecked(i)"
                                                            [checked]="checkList[i]"></td>
                 <td class="product-thumbnail">
                   <a [routerLink]="['/detail',cartBook.bookId.bookId]"><img class="img-responsive ml-15px"
@@ -204,8 +204,9 @@
                     <!--              <h4 class="grand-totall-title">Tổng tiền <span>$260.00</span></h4>-->
                     <a style="cursor: pointer" (click)="payment()">Tiến hành thanh toán</a>
                     <div  class="w-100 d-flex justify-content-center mt-3">
-                      <div class="w-100 " style="z-index: 1" id="myPayPal1"></div>
+                      <div class="w-100 " style="z-index: 1" id="myPayPal"></div>
                     </div>
+<!--                    <div hidden id="paymentModal" data-bs-toggle="modal" data-bs-target="#payment"></div>-->
                   </div>
                 </div>
 
@@ -347,6 +348,33 @@
           <div class="navbar-form position-relative" role="search">
             <div class="form-group" style="font-family: Helvetica Neue; font-size: 1.2rem">
               {{cartBookDelete.bookId.bookName}}
+            </div>
+          </div>
+          <div class="mt-5 row  d-flex justify-content-center">
+            <button data-bs-dismiss="modal" (click)="delete(cartBookDelete.cartId.cartId)" class=" btn__delete"
+                    style="margin-right: 30px"> Có
+            </button>
+            <button data-bs-dismiss="modal" class=" btn__cancel  "> Không</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--======================== Modal Thanh toán =======================-->
+<div class="modal popup-search-style" id="payment">
+  <!--  <button type="button" class="close-btn" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>-->
+  <div class="modal-overlay">
+    <div class="modal-dialog p-0" role="document">
+      <div class="modal-content">
+        <div class="modal-body "
+             style="z-index: 100; background-color: white;width: 500px; height: 260px; border-radius: 5px">
+          <h2 class="mb-5" style="color: #ee4d2d; font-family: Helvetica Neue; font-size: 1.5rem">Chọn phương thức thanh toán.</h2>
+          <!--              <form class="navbar-form position-relative" role="search">-->
+          <div class="navbar-form position-relative" role="search">
+            <div class="form-group" style="font-family: Helvetica Neue; font-size: 1.2rem">
+              <div class="w-100 " style="z-index: 1" id="myPayPal"></div>
             </div>
           </div>
           <div class="mt-5 row  d-flex justify-content-center">
