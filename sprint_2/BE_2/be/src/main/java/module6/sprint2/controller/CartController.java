@@ -3,10 +3,8 @@ package module6.sprint2.controller;
 import module6.sprint2.entity.book.Book;
 import module6.sprint2.entity.cart.Cart;
 import module6.sprint2.entity.cart.CartBook;
-import module6.sprint2.service.IAccountService;
-import module6.sprint2.service.IBookService;
-import module6.sprint2.service.ICartBookService;
-import module6.sprint2.service.ICartService;
+import module6.sprint2.entity.customer.Customer;
+import module6.sprint2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +32,9 @@ public class CartController {
 
     @Autowired
     IAccountService accountService;
+
+    @Autowired
+    ICustomerService customerService;
 
     @GetMapping("/cart-book-list/{id}")
     public ResponseEntity<List<CartBook>> findAllCart(@PathVariable("id") Long id) {
@@ -201,5 +202,13 @@ public class CartController {
             cartService.deleteManyBookCart(cardId[i]);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/getCustomerByAccount")
+    public ResponseEntity<Customer> getCustomerByAccountId(@RequestParam("id") Long id) {
+        Customer customer = customerService.findCustomer(id);
+//
+        return new ResponseEntity<>(customer, HttpStatus.OK);
+//        }
     }
 }
