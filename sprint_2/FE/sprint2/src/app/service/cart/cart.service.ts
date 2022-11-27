@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {ICartBook} from '../../model/cart/ICartBook';
 import {ICart} from '../../model/cart/ICart';
 import {IBook} from '../../model/book/IBook';
+import {ICustomer} from '../../model/customer/ICustomer';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,11 @@ export class CartService {
   }
 
   deleteManyBookCart(cartId: number[]): Observable<void> {
-    return this.http.post<void>(this.API_URL + '/delete-many-book-cart/' , cartId);
+    return this.http.post<void>(this.API_URL + '/delete-many-book-cart/', cartId);
+  }
+
+  infoCustomer(accountId: number): Observable<ICustomer> {
+    return this.http.get<ICustomer>(this.API_URL + '/customer?id=' + accountId);
   }
 
 }

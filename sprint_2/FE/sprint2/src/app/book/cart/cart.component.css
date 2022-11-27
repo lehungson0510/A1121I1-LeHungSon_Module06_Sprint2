@@ -198,3 +198,9 @@ input {
 input[type='checkbox'] {
   accent-color: #eaaa85;
 }
+
+.address__order .title__{
+  letter-spacing: 1.1px;
+  color: #eaaa85;
+  font-size: 18px;
+}

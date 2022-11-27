@@ -18,6 +18,6 @@ export class CustomerService {
   // }
 
   findCustomerByAccountId(accountId: number): Observable<ICustomer> {
-    return this.http.get<ICustomer>(this.API_URL + '/getCustomerByAccount?accountId=' + accountId);
+    return this.http.get<ICustomer>(this.API_URL + '/getCustomerByAccount?id=' + accountId);
   }
 }

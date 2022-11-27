@@ -91,7 +91,8 @@
             <table>
               <thead>
               <tr>
-                <th class=" m-0"><input type="checkbox" style="cursor: pointer; width: 15px; height: 15px" (change)="isAllChecked()" [checked]="checkAll"></th>
+                <th class=" m-0"><input type="checkbox" style="cursor: pointer; width: 15px; height: 15px"
+                                        (change)="isAllChecked()" [checked]="checkAll"></th>
                 <th>Ảnh</th>
                 <th>Tên sản phẩm</th>
                 <th>Giá cả</th>
@@ -103,7 +104,8 @@
               <tbody>
               <tr
                 *ngFor="let cartBook of cartBookList, index as i">
-                <td style="width: 5px" class=" m-0"><input style="cursor: pointer; width: 15px; height: 15px" type="checkbox" (change)="isChecked(i)"
+                <td style="width: 5px" class=" m-0"><input style="cursor: pointer; width: 15px; height: 15px"
+                                                           type="checkbox" (change)="isChecked(i)"
                                                            [checked]="checkList[i]"></td>
                 <td class="product-thumbnail">
                   <a [routerLink]="['/detail',cartBook.bookId.bookId]"><img class="img-responsive ml-15px"
@@ -118,10 +120,10 @@
                 <td class="product-quantity">
                   <div class="cart-plus-minus">
                     <input class="cart-plus-minus-box" #quantity (change)="changeQuantity(cartBook,quantity.value)"
-                              min="0"
+                           min="0"
                            type="number" name="qtybutton"
                            value="{{cartBook.cartId.cartQuantity}}"/>
-<!--                    [max]="quantityBook[i]"-->
+                    <!--                    [max]="quantityBook[i]"-->
                   </div>
                   <div hidden id="delete" data-bs-toggle="modal" data-bs-target="#deleteCart"></div>
                 </td>
@@ -182,11 +184,16 @@
 
 
                 <div class="col-lg-4 col-md-12 mt-md-30px">
-                  <div class="grand-totall ">
-                    <div class="title-wrap">
-                      <h4 class="cart-bottom-title section-bg-gary-cart">Giỏ hàng</h4>
+                  <div class="grand-totall address__order ">
+                    <div class="text-center" style="font-size: 25px" > <span class="ml-15px" style="color: #eaaa85 ">Địa chỉ nhận hàng</span></div>
+                    <div class="mt-2"><i  style="color:#eaaa85;" class="fa-sharp fa-solid fa-user"></i><span class="ml-15px">{{customer.customerName}}</span></div>
+                    <div class="mt-2"><i style="color:#eaaa85;" class="fa-solid fa-location-dot"></i><span class="ml-15px">{{customer.customerAddress}}</span></div>
+                    <div class="mt-2"><i style="color:#eaaa85;"  class="fa-solid fa-phone"></i><span class="ml-15px">{{customer.customerPhone}}</span></div>
+                    <div class="title-wrap mt-3 text-center">
+                      <h4 class="cart-bottom-title section-bg-gary-cart" style="color: #eaaa85 ">Giỏ hàng</h4>
                     </div>
                     <h5>Tổng tiền sản phẩm <span>{{totalMoney | currency:'VND'}}</span></h5>
+                    <h5>Tiết kiệm <span>{{totalMoneyAfterPromotion | currency:'VND'}}</span></h5>
                     <!--              <div class="total-shipping">-->
                     <!--                <h5>Phí vận chuyển</h5>-->
                     <!--                <ul>-->
@@ -202,11 +209,11 @@
                     <!--                </ul>-->
                     <!--              </div>-->
                     <!--              <h4 class="grand-totall-title">Tổng tiền <span>$260.00</span></h4>-->
-                    <a style="cursor: pointer" (click)="payment()">Tiến hành thanh toán</a>
-                    <div  class="w-100 d-flex justify-content-center mt-3">
-                      <div class="w-100 " style="z-index: 1" id="myPayPal"></div>
-                    </div>
-<!--                    <div hidden id="paymentModal" data-bs-toggle="modal" data-bs-target="#payment"></div>-->
+                    <a style="cursor: pointer; color: white" (click)="showPayPalButton()">Tiến hành thanh toán</a>
+<!--                    <div class="w-100 d-flex justify-content-center mt-3">-->
+<!--                      <div class="w-100 " style="z-index: 1" id="myPayPal"></div>-->
+<!--                    </div>-->
+                    <div hidden id="paymentModal" data-bs-toggle="modal" data-bs-target="#payment"></div>
                   </div>
                 </div>
 
@@ -369,19 +376,20 @@
     <div class="modal-dialog p-0" role="document">
       <div class="modal-content">
         <div class="modal-body "
-             style="z-index: 100; background-color: white;width: 500px; height: 260px; border-radius: 5px">
-          <h2 class="mb-5" style="color: #ee4d2d; font-family: Helvetica Neue; font-size: 1.5rem">Chọn phương thức thanh toán.</h2>
+             style="z-index: 100; background-color: white;width: 500px; height: 390px; border-radius: 5px">
+          <h2 class="mb-5" style="color:#eaaa85; font-family: Helvetica Neue; font-size: 1.5rem">Chọn phương thức thanh
+            toán.</h2>
           <!--              <form class="navbar-form position-relative" role="search">-->
           <div class="navbar-form position-relative" role="search">
-            <div class="form-group" style="font-family: Helvetica Neue; font-size: 1.2rem">
+            <div data-bs-dismiss="modal" class="form-group" style="font-family: Helvetica Neue; font-size: 1.2rem">
               <div class="w-100 " style="z-index: 1" id="myPayPal"></div>
             </div>
           </div>
           <div class="mt-5 row  d-flex justify-content-center">
-            <button data-bs-dismiss="modal" (click)="delete(cartBookDelete.cartId.cartId)" class=" btn__delete"
-                    style="margin-right: 30px"> Có
-            </button>
-            <button data-bs-dismiss="modal" class=" btn__cancel  "> Không</button>
+<!--            <button data-bs-dismiss="modal" (click)="delete(cartBookDelete.cartId.cartId)" class=" btn__delete"-->
+<!--                    style="margin-right: 30px"> Huy-->
+<!--            </button>-->
+            <button data-bs-dismiss="modal" style="color: black;" (click)="deleteTick()" class=" btn__delete "> Hủy</button>
           </div>
         </div>
       </div>

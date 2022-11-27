@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {BookService} from '../../service/book/book.service';
 import {ICartBook} from '../../model/cart/ICartBook';
 import {TokenStorageService} from '../../service/security/token-storage.service';
@@ -8,7 +8,8 @@ import {NotifierService} from 'angular-notifier';
 import {ICart} from '../../model/cart/ICart';
 import {render} from 'creditcardpayments/creditCardPayments';
 import {HeaderComponent} from '../../layout/header/header.component';
-
+import {CustomerService} from '../../service/customer/customer.service';
+import {ICustomer} from '../../model/customer/ICustomer';
 
 @Component({
   selector: 'app-cart',
@@ -19,7 +20,8 @@ export class CartComponent implements OnInit {
   cartForm: FormGroup;
   checkList: boolean[] = [];
   checkAll = false;
-  money = 0.0;
+  moneyAfterPromote = 0.0;
+  moneyBeforePromote = 0.0;
   totalMoney = 0.0;
   totalMoneyPerProduct: number[] = [];
 
@@ -46,33 +48,91 @@ export class CartComponent implements OnInit {
 
   quantityBookDelete: number[] = [];
 
-  moneyPayment: string = '';
+  paymentPayPal: any;
+
+  customer: ICustomer = {};
+
+  totalMoneyBeforePromotion: number;
+  totalMoneyAfterPromotion: number;
 
   constructor(private bookService: BookService,
               private tokenStorageService: TokenStorageService,
               private cartService: CartService,
+              private customerService: CustomerService,
               private notification: NotifierService,
               private headerComponent: HeaderComponent) {
+
+    this.paymentPayPal = render(
+      {
+        id: '#myPayPal',
+        currency: 'USD',
+        value: this.totalMoney.toString(),
+        onApprove: (details) => {
+          this.notification.notify('success', 'Thanh toán thành công');
+          this.payment();
+        }
+      }
+    );
   }
 
   ngOnInit(): void {
-    render(
-      {
-        id: '#myPayPal',
-        currency: 'VND',
-        value: '500',
-        onApprove: (details => {
-          this.notification.notify('success', 'Thanh toán thành công');
-        })
-      }
-    );
+    //
+
+    // window.paypal.Buttons({
+    //   createOrder(data, actions) {
+    //     return actions.order.create({
+    //       payer: {
+    //         address: {
+    //           address_line_1: 'Thừa Thiên Huế',
+    //           address_line_2: 'Thừa Đà Nẵng'
+    //         },
+    //
+    //         email_address: 'a@gmail.com',
+    //         phone: {
+    //           phone_type: 'MOBILE',
+    //           phone_number: {
+    //             national_number: '0123456789'
+    //           }
+    //         }
+    //       },
+    //       purchase_units: [{
+    //         amount: {
+    //           value: '123',
+    //           currency_code: 'USD'
+    //         }
+    //       }]
+    //     });
+    //   }
+    // }).render('#myPayPal');
+
+    // const totalMoney1 = this.getTotalMoney();
+    // window.paypal.Buttons(
+    //   {
+    //     style: {
+    //       layout: 'horizontal',
+    //       color: 'blue',
+    //       shape: 'rect',
+    //       label: 'paypal'
+    //     },
+    //     createOrder(data, actions) {
+    //       return actions.order.create({
+    //         purchase_units: [{
+    //           amount: {
+    //             value: totalMoney1.toString(),
+    //             currency_code: 'USD'
+    //           }
+    //         }]
+    //       });
+    //     }
+    //   }).render('#myPayPal');
 
     this.topFunction();
     this.accountId = this.tokenStorageService.getUser().account.accountId;
     this.getCartBookList(this.accountId);
-    this.cartForm = new FormGroup({
-      quantity: new FormControl(1)
-    });
+    this.getTotalMoney();
+    this.customerService.findCustomerByAccountId(this.accountId).subscribe(
+      (data) => this.customer = data
+    );
   }
 
   topFunction() {
@@ -154,13 +214,17 @@ export class CartComponent implements OnInit {
       this.cartBookList = data;
       this.cartBookList.forEach((check, index) => {
         if (this.checkList[index]) {
-          this.money += this.cartBookList[index].bookId.bookPrice * this.cartBookList[index].cartId.cartQuantity
+          this.moneyAfterPromote += this.cartBookList[index].bookId.bookPrice * this.cartBookList[index].cartId.cartQuantity
             - (this.cartBookList[index].bookId.bookPrice * this.cartBookList[index].cartId.cartQuantity
               * (this.cartBookList[index].bookId.bookPromotionId.promotionPercent / 100));
+
+          this.moneyBeforePromote += this.cartBookList[index].bookId.bookPrice * this.cartBookList[index].cartId.cartQuantity;
         }
       });
-      this.totalMoney = this.money;
-      this.money = 0.0;
+      this.totalMoney = this.moneyAfterPromote;
+      this.totalMoneyAfterPromotion = this.moneyBeforePromote - this.totalMoney;
+      this.moneyAfterPromote = 0.0;
+      this.moneyBeforePromote = 0.0;
     });
   }
 
@@ -255,7 +319,7 @@ export class CartComponent implements OnInit {
     }
   }
 
-  payment() {
+  showPayPalButton() {
     this.cartBookList.forEach((check, index) => {
       if (this.checkList[index]) {
         // Kiểm tra số lượng sản phẩm đã chọn?
@@ -264,20 +328,38 @@ export class CartComponent implements OnInit {
       }
     });
 
+    if (this.quantityBookDelete.length < 1) {
+      this.notification.notify('warning', 'Vui lòng chọn sản phẩm');
+    } else {
+
+      // reset paypal
+      (document.getElementById('paymentModal') as HTMLFormElement).click();
+      (document.getElementById('myPayPal') as HTMLFormElement).innerHTML = '<div></div>';
+      this.paymentPayPal = render(
+        {
+          id: '#myPayPal',
+          currency: 'USD',
+          value: (this.totalMoney / 25000).toFixed(2).toString(),
+          onApprove: (details) => {
+            this.notification.notify('success', 'Thanh toán thành công');
+            this.payment();
+          }
+        }
+      );
+
+
+    }
+  }
+
+  payment() {
     this.cartService.paymentCart(this.cartPaymentList).subscribe(data => {
-    }, () => {
-    }, () => {
-      if (this.quantityBookDelete.length < 1) {
-        this.notification.notify('warning', 'Vui lòng chọn sản phẩm');
-      } else {
-        // (document.getElementById('paymentModal') as HTMLFormElement).click();
-        this.notification.notify('success', 'Thanh toán thành công');
+      }, () => {
+      }, () => {
         this.headerComponent.getQuantityCart(this.accountId);
         // load page
         this.getCartBookList(this.accountId);
         this.getTotalMoney();
         this.topFunction2();
-
         // Xóa đi mấy cái đã tick trước đó
         this.cartPaymentList.splice(0, this.cartPaymentList.length);
         this.quantityBookDelete.splice(0, this.quantityBookDelete.length);
@@ -285,8 +367,13 @@ export class CartComponent implements OnInit {
           this.checkList[index] = false;
         });
         this.checkAll = false;
-        // window.location.assign('/cart');
+        window.location.assign('/cart');
       }
-    });
+    );
+  }
+
+  deleteTick() {
+    // reset số lượng quantity book
+    this.quantityBookDelete.splice(0, this.quantityBookDelete.length);
   }
 }
