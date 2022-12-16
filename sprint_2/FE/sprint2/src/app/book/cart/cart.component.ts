@@ -153,6 +153,22 @@ export class CartComponent implements OnInit {
           this.checkList.push(false);
         }
         this.cartBookList.forEach((cartBook, index) => {
+
+          // ============================= Thêm 19h11 28/11/2022==============================
+          // ========= Nếu bên A thanh toán thì bên B bị mất số lượng ===============
+          if (cartBook.cartId.cartQuantity >= cartBook.bookId.bookQuantity) {
+            // this.notification.notify('warning', 'Số lượng sách của bạn bị giảm hoặc đã hết!!');
+            cartBook.cartId.cartQuantity = cartBook.bookId.bookQuantity;
+            this.cartService.updateQuantityCart(cartBook).subscribe(() => {
+            }, () => {
+            }, () => {
+              // this.headerComponent.getQuantityCart(this.accountId);
+              this.getCartBookList(this.accountId);
+              this.getTotalMoney();
+              this.headerComponent.getQuantityCart(this.accountId);
+            });
+          }
+
             this.totalMoneyPerProduct[index] = cartBook.cartId.cartQuantity * cartBook.bookId.bookPrice - (cartBook.cartId.cartQuantity * cartBook.bookId.bookPrice * cartBook.bookId.bookPromotionId.promotionPercent / 100);
             this.quantityBook[index] = cartBook.bookId.bookQuantity;
           }
