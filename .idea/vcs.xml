@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_1/BE_sprint1_A1121I1/A1121I01-Repo-BE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_1/FE_sprint1_A1121I1/A1121I01-Repo-FE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_1/[A1121I1]_Coding_Angular_Copy_SonLH/angular-customer/A1121I01-Repo-FE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_1/[A1121I1]_Coding_Angular_Copy_SonLH/angular-employee/A1121I01-Repo-FE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_1/[A1121I1]_Coding_Angular_SonLH/angular-customer/A1121I01-Repo-FE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_1/[A1121I1]_Coding_Angular_SonLH/angular-employee/A1121I01-Repo-FE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_1/[A1121I1]_Coding_Spring_Copy_SonLH/sprint1-customer/A1121I01-Repo-BE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_1/[A1121I1]_Coding_Spring_Copy_SonLH/sprint1-employee/A1121I01-Repo-BE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_1/[A1121I1]_Coding_Spring_SonLH/sprint1-customer/A1121I01-Repo-BE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_1/[A1121I1]_Coding_Spring_SonLH/sprint1-employee/A1121I01-Repo-BE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_1/test/A1121I01-Repo-BE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_1/test_c_an/A1121I01-Repo-BE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_1/test_c_an/A1121I01-Repo-FE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sprint_2/test_thang_BE/A1121I1-LuongThanhThang-Module06" vcs="Git" />
+  </component>
+</project>
